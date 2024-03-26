@@ -12,6 +12,9 @@
       </h1>
       <ul>
         <li>
+          <router-link v-if="isAdmin" to="/events/new">Crea Evento</router-link>
+        </li>
+        <li>
           <router-link to="/counter">Segnapunti</router-link>
         </li>
         <li>
@@ -48,6 +51,10 @@ export default {
     isAuthenticated() {
       return this.$store.getters.isAuthenticated;
     },
+    isAdmin(){
+      //TODO
+      return true
+    }
   },
   data() {
     return {

@@ -28,6 +28,7 @@ export default {
           email: payload.email,
           password: payload.password,
           returnSecureToken: true,
+          userRoles: []
         }),
       }
     );
@@ -40,7 +41,6 @@ export default {
     }
 
     const expiresIn= +responseData.expiresIn * 1000
-    //const expiresIn= 5000 //for auth tests
     const expirationDate= new Date().getTime() + expiresIn
 
     localStorage.setItem('token', responseData.idToken)
@@ -70,18 +70,22 @@ export default {
       context.dispatch('autoLogout')
     }, expiresIn)
 
+    //TODO richiedere a backend il set di ruoli, così da fare il set locale
+    //andare a backend tramite userId token (solo se expiresIn è > di qualcosa) a fare select dei ruoli
+    //se il token è valido prendo i ruoli
     if(token && userId){
       context.commit('setUser', {
         token: token,
-        userId: userId
+        userId: userId,
+        //userRoles: userRoles
       })
     }
   },
   logout(context) {
-    console.log('LOGOUT')
     context.commit('setUser', {
       token: null,
-      userId: null
+      userId: null,
+      userRoles: []
     });
     localStorage.removeItem('token')
     localStorage.removeItem('userId')

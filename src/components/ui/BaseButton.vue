@@ -15,7 +15,7 @@ export default {
     //uso mode per usare classi css dinamiche (tra flat e outline)
     mode: {
         type: String,
-        requidred: false,
+        required: false,
         default: null
     },
     link: {
@@ -73,4 +73,34 @@ button:active {
 .outline:active {
   background-color: #edd2ff;
 }
+
+.animated {
+    color: white;
+    background: #1463f5;
+    align-self: center;
+    border: none;
+  }
+  
+  .animated:hover,
+  .animated:focus{
+    transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
+    animation: gelatine 0.5s 1;
+    background: #f391e3;
+  }
+  
+  @keyframes gelatine {
+    0%,
+    100% {
+      transform: scale(1, 1);
+    }
+    25% {
+      transform: scale(0.9, 1.1);
+    }
+    50% {
+      transform: scale(1.1, 0.9);
+    }
+    75% {
+      transform: scale(0.95, 1.05);
+    }
+  }
 </style>

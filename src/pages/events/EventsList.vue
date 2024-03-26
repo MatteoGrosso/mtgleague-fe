@@ -1,15 +1,14 @@
 <template>
   <base-card>
-    <h1>{{ pageTitle }}</h1>
+    <div class="header">
+      <h1>{{ pageTitle }}</h1>
+      <base-button link :mode="'animated'" :to="newEventLink">Crea Nuovo</base-button>
+    </div>
     <div>
       <section>
         <header>
-          <base-button :mode="programButtonMode" @click="showProgram"
-            >Programmazione</base-button
-          >
-          <base-button :mode="historyButtonMode" @click="showHistory"
-            >Storico</base-button
-          >
+          <base-button :mode="programButtonMode" @click="showProgram">Programmazione</base-button>
+          <base-button :mode="historyButtonMode" @click="showHistory">Storico</base-button>
         </header>
       </section>
       <section>
@@ -47,6 +46,9 @@ export default {
     },
     historyButtonMode() {
       return this.pageMode === 'history' ? '' : 'outline';
+    },
+    newEventLink() {
+      return this.$route.path + '/new';
     },
   },
   components: {
@@ -87,4 +89,10 @@ ul {
   margin: 0;
   padding: 0;
 }
+
+.header{
+  display: flex;
+  justify-content: space-between;
+}
+  
 </style>

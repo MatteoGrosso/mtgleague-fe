@@ -2,6 +2,7 @@ import store from './store/index.js'
 import { createRouter, createWebHistory } from 'vue-router';
 
 import EventsList from './pages/events/EventsList.vue'
+import EventCreation from './pages/events/EventCreation.vue'
 import HealthCounter from './pages/HealthCounter.vue'
 import NotFound from './pages/NotFound.vue'
 import UserAuth from './pages/auth/UserAuth.vue'
@@ -16,6 +17,10 @@ const router = createRouter({
         {path: '/events', component: EventsList},
         {path: '/events/:id', 
         component: EventDetails, 
+        props: true, //passo l'id (:id) come prop
+        },
+        {path: '/events/new', 
+        component: EventCreation, 
         props: true, //passo l'id (:id) come prop
         },
         {path: '/players', component: PlayersList},
