@@ -68,13 +68,16 @@ li{
 }
 
 .open {
-  display: block !important;
-  opacity: 1 !important;
-  transform: translateY(0) translateX(0) !important;
+  display: block;
+  opacity: 1;
+  transform: translateY(0) translateX(0);
 }
 
-@media (min-width: 67.5rem) {
+@media (min-width: 69rem) {
   .mobile-nav {
+    display: none;
+  }
+  .mobile-nav__items{
     display: none;
   }
 }

@@ -7,6 +7,9 @@
       </h1>
     </div>
     <nav class="main-nav">
+      <h1>
+        <router-link class="logo" to="/">LP Canavese</router-link>
+      </h1>
       <ul>
         <li>
           <router-link to="/counter">Segnapunti</router-link>
@@ -43,17 +46,26 @@ export default {
   },
   data() {
     return {
-      isOpen: false
-    }
+      isOpen: false,
+      baseFontSize: parseFloat(getComputedStyle(document.documentElement).fontSize)
+    };
   },
   methods: {
     toggleMobileNav() {
-      this.isOpen= !this.isOpen
+      this.isOpen = !this.isOpen;
     },
-    closeMobileNav(){
-      this.isOpen= false
-    }
-  }
+    closeMobileNav() {
+      this.isOpen = false;
+    },
+    checkViewPortForMobileNav() {
+      if(window.innerWidth>this.baseFontSize){
+        this.closeMobileNav()
+      }
+    },
+  },
+  mounted() {
+    window.addEventListener('resize', this.checkViewPortForMobileNav);
+  },
 };
 </script>
 
@@ -62,6 +74,7 @@ export default {
   min-width: 300px;
   display: flex;
   width: 100%;
+  height: 4rem;
   position: fixed;
   z-index: 10;
   top: 0;
@@ -123,17 +136,32 @@ header li {
 .main-nav {
   display: none;
 }
-.logo{
-  color: #FB84D0
+
+.logo {
+  color: #fb84d0;
 }
 
-@media (min-width: 67.5rem) {
+@media (min-width: 69rem) {
+  .main-header{
+    height: 6rem;
+  }
+
   .main-nav {
     display: flex;
+    align-items: center;
   }
 
   .mobile-header {
     width: 23%;
+    display: none;
+  }
+
+  header nav {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 </style>

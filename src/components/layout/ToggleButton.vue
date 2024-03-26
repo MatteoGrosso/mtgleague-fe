@@ -40,7 +40,7 @@ export default {
   margin: 0.6rem 0;
 }
 
-@media (min-width: 67.5rem) {
+@media (min-width: 69rem) {
   .toggle-button {
     display: none;
   }

@@ -1,16 +1,16 @@
 <template>
   <div class="container">
     <div class="counter">
-      <div class="overlay" @click="loseHealth('p1')"><div>-</div></div>
-      <div class="overlay-down" @click="gainHealth('p1')"><div>+</div></div>
+      <div class="overlay-down p1" @click="loseHealth('p1')"><div>-</div></div>
+      <div class="overlay p1" @click="gainHealth('p1')"><div>+</div></div>
       <div class="circle">{{p1}}</div>
     </div>
     <div class="reset" @click="reset">
       <img src="../assets/reset.svg" alt="reset">
     </div>
     <div class="counter">
-      <div class="overlay" @click="loseHealth('p2')"><div>-</div></div>
-      <div class="overlay-down" @click="gainHealth('p2')"><div>+</div></div>
+      <div class="overlay p2" @click="loseHealth('p2')"><div>-</div></div>
+      <div class="overlay-down p2" @click="gainHealth('p2')"><div>+</div></div>
       <div class="circle">{{p2}}</div>
     </div>
   </div>
@@ -84,7 +84,6 @@ img {
   width: 50%;
   height: 100%;
   left: 0;
-  background-color: rgba(132, 16, 16, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,10 +95,16 @@ img {
   height: 100%;
   left: 50%;
   border-left: 1px solid black;
-  background-color: rgba(18, 110, 12, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.overlay-down.p1, .overlay.p2 {
+  background-color: rgba(132, 16, 16, 0.5);
+}
+.overlay.p1, .overlay-down.p2 {
+  background-color: rgba(18, 110, 12, 0.5);
 }
 
 .circle {
@@ -118,12 +123,16 @@ img {
   transform: translate(-50%, -50%); /* Centering trick */
 }
 
+.health.p1{
+  transform: rotateX(-180deg);
+}
+
 .overlay, .overlay-down, .circle, img {
   user-select: none;
 }
 
 
-@media (min-width: 40rem) {
+@media (min-width: 69rem) {
   .container {
   flex-direction: row;
 }
@@ -167,7 +176,7 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2.5rem;
+  font-size: 4rem;
   background-color: white;
 }
 

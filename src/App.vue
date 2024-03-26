@@ -32,7 +32,7 @@ html {
 body {
   margin: 0;
   display: grid;
-  grid-template-rows: 4rem auto;
+  grid-template-rows: 6rem auto;
   grid-template-areas: "header"
                         "main";
   height: 100%;
