@@ -63,9 +63,8 @@ export default {
 .reset {
   position: relative;
   height: 10%;
-  font-size: 3rem;
   border-radius: 50%;
-  width: 11%;
+  width: 5%;
   height: 7%;
   align-self: center;
   display: flex;
@@ -144,7 +143,6 @@ img {
 
 .reset {
   width: 10%;
-  height: 100%;
   border: 1px solid black;
 }
 
