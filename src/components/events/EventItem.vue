@@ -51,6 +51,10 @@ h3,
 h4 {
   margin: 0.5rem 0;
 }
-
+@media(min-width: 41rem){
+  li {
+  padding-top: 0
+}
+}
 
 </style>
