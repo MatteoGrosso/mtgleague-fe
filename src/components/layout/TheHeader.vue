@@ -1,9 +1,9 @@
 <template>
   <header class="main-header">
     <div class="mobile-header">
-      <toggle-button @open-mobilenav="openMobileNav"></toggle-button>
+      <toggle-button @toggle-mobilenav="toggleMobileNav"></toggle-button>
       <h1>
-        <router-link to="/">LP Canavese</router-link>
+        <router-link class="logo" to="/">LP Canavese</router-link>
       </h1>
     </div>
     <nav class="main-nav">
@@ -47,8 +47,8 @@ export default {
     }
   },
   methods: {
-    openMobileNav() {
-      this.isOpen= true
+    toggleMobileNav() {
+      this.isOpen= !this.isOpen
     },
     closeMobileNav(){
       this.isOpen= false
@@ -59,6 +59,7 @@ export default {
 
 <style scoped>
 .main-header {
+  min-width: 300px;
   display: flex;
   width: 100%;
   position: fixed;
@@ -121,6 +122,9 @@ header li {
 
 .main-nav {
   display: none;
+}
+.logo{
+  color: #FB84D0
 }
 
 @media (min-width: 67.5rem) {

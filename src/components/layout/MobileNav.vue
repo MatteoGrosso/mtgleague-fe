@@ -40,11 +40,13 @@ export default {
 <style scoped>
 .mobile-nav {
   position: fixed;
+  min-width: 300px;
   transform: translateX(-100%);
   transition: transform 0.3s ease-out;
   top: 0;
   left: 0;
-  background: white;
+  z-index: 1;
+  background: #B0B5DA;
   width: 100%;
   height: 100vh;
 }

@@ -1,5 +1,5 @@
 <template>
-  <button class="toggle-button" @click="openMobileNav">
+  <button class="toggle-button" @click="toggleMobileNav">
     <span class="toggle-button__bar"></span>
     <span class="toggle-button__bar"></span>
     <span class="toggle-button__bar"></span>
@@ -8,10 +8,10 @@
 
 <script>
 export default {
-  emits: ['open-mobilenav'],
+  emits: ['toggle-mobilenav'],
   methods: {
-    openMobileNav() {
-      this.$emit('open-mobilenav');
+    toggleMobileNav() {
+      this.$emit('toggle-mobilenav');
     },
   },
 };
