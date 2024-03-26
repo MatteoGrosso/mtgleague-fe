@@ -31,8 +31,15 @@ html {
 
 body {
   margin: 0;
+  display: grid;
+  grid-template-rows: 4rem auto;
+  grid-template-areas: "header"
+                        "main";
   height: 100%;
-  padding-top: 3rem;
+}
+
+#app {
+  grid-area: main;
 }
 
 .route-enter-from{

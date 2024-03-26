@@ -62,13 +62,13 @@ export default {
   display: flex;
   width: 100%;
   position: fixed;
-  z-index: 1;
+  z-index: 10;
   top: 0;
   left: 0;
   background: #3d008d;
-  padding: 0.5rem 1rem;
   align-items: center;
   justify-content: space-between;
+  grid-area: header;
 }
 
 .mobile-header {

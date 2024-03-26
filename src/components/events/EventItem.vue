@@ -40,6 +40,7 @@ export default {
 <style scoped>
 li {
   list-style: none;
+  padding-top: 1rem
 }
 
 h3 {
