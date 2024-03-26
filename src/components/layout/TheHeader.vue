@@ -1,9 +1,12 @@
 <template>
-  <header>
-    <nav>
+  <header class="main-header">
+    <div class="mobile-header">
+      <toggle-button @open-mobilenav="openMobileNav"></toggle-button>
       <h1>
         <router-link to="/">LP Canavese</router-link>
       </h1>
+    </div>
+    <nav class="main-nav">
       <ul>
         <li>
           <router-link to="/counter">Segnapunti</router-link>
@@ -26,37 +29,51 @@
       </ul>
     </nav>
   </header>
-  <nav class="mobile-nav">
-        <ul class="mobile-nav__items">
-            <li class="mobile-nav__item">
-                <a href="packages/index.html">Packages</a>
-            </li>
-            <li class="mobile-nav__item">
-                <a href="customers/index.html">Customers</a>
-            </li>
-            <li class="mobile-nav__item mobile-nav__item--cta">
-                <a href="start-hosting/index.html">Start Hosting</a>
-            </li>
-        </ul>
-    </nav>
+  <mobile-nav :isOpen="isOpen" @close-mobilenav="closeMobileNav"></mobile-nav>
 </template>
 
 <script>
+import MobileNav from './MobileNav.vue';
+import ToggleButton from './ToggleButton.vue';
+
 export default {
+  components: {
+    ToggleButton,
+    MobileNav,
+  },
+  data() {
+    return {
+      isOpen: false
+    }
+  },
+  methods: {
+    openMobileNav() {
+      this.isOpen= true
+    },
+    closeMobileNav(){
+      this.isOpen= false
+    }
+  }
 };
 </script>
 
 <style scoped>
-header {
+.main-header {
+  display: flex;
   width: 100%;
   position: fixed;
+  z-index: 1;
   top: 0;
   left: 0;
   background: #3d008d;
   padding: 0.5rem 1rem;
-  z-index: 2;
-  display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+.mobile-header {
+  display: flex;
+  width: 100%;
   justify-content: space-between;
 }
 
@@ -89,14 +106,6 @@ h1 a.router-link-active {
   border-color: transparent;
 }
 
-header nav {
-  width: 90%;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 header ul {
   list-style: none;
   margin: 0;
@@ -106,41 +115,21 @@ header ul {
   align-items: center;
 }
 
-li {
+header li {
   margin: 0 0.5rem;
 }
 
-.mobile-nav {
-  position: fixed;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease-out;
-  z-index: 101;
-  top: 0;
-  left: 0;
-  background: white;
-  width: 80%;
-  height: 100vh;
+.main-nav {
+  display: none;
 }
 
-.mobile-nav__items {
-  width: 90%;
-  height: 100%;
-  list-style: none;
-  margin: 0% auto;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+@media (min-width: 67.5rem) {
+  .main-nav {
+    display: flex;
+  }
 
+  .mobile-header {
+    width: 23%;
+  }
 }
-
-.mobile-nav__item {
-  margin: 1rem 0;
-}
-
-.mobile-nav__item a {
-  font-size: 1.5rem;
-}
-
 </style>
