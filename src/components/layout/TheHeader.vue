@@ -15,19 +15,19 @@
           <router-link to="/counter">Segnapunti</router-link>
         </li>
         <li>
-          <router-link to="/current">Partita in corso</router-link>
-        </li>
-        <li>
           <router-link to="/events">Eventi</router-link>
         </li>
         <li>
           <router-link to="/players">Classifica</router-link>
         </li>
         <li>
-          <router-link to="/auth">Login</router-link>
+          <router-link v-if="isAuthenticated" to="/current">Partita in corso</router-link>
         </li>
-        <li>
-          <base-button>Logout</base-button>
+        <li v-if="!isAuthenticated">
+          <base-button link to="/auth">Login</base-button>
+        </li>
+        <li v-else>
+          <base-button @click="logout">Logout</base-button>
         </li>
       </ul>
     </nav>
@@ -43,6 +43,11 @@ export default {
   components: {
     ToggleButton,
     MobileNav,
+  },
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
+    },
   },
   data() {
     return {
@@ -62,6 +67,10 @@ export default {
         this.closeMobileNav()
       }
     },
+    logout(){
+      this.$store.dispatch('logout')
+      this.$router.replace('/events')
+    }
   },
   mounted() {
     window.addEventListener('resize', this.checkViewPortForMobileNav);

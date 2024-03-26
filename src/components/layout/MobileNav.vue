@@ -1,21 +1,28 @@
 <template>
   <nav class="mobile-nav" :class="open">
     <ul class="mobile-nav__items">
-        <li>
-          <router-link to="/counter" @click="closeMobileNav">Segnapunti</router-link>
+      <li>
+        <router-link to="/counter" @click="closeMobileNav"
+          >Segnapunti</router-link
+        >
+      </li>
+      <li>
+          <router-link v-if="isAuthenticated" to="/current" @click="closeMobileNav">Partita in corso</router-link>
         </li>
-        <li>
-          <router-link to="/current" @click="closeMobileNav">Partita in corso</router-link>
-        </li>
-        <li>
-          <router-link to="/events" @click="closeMobileNav">Eventi</router-link>
-        </li>
-        <li>
-          <router-link to="/players" @click="closeMobileNav">Classifica</router-link>
-        </li>
-        <li>
-          <router-link to="/auth" @click="closeMobileNav">Login</router-link>
-        </li>
+      <li>
+        <router-link to="/events" @click="closeMobileNav">Eventi</router-link>
+      </li>
+      <li>
+        <router-link to="/players" @click="closeMobileNav"
+          >Classifica</router-link
+        >
+      </li>
+      <li v-if="!isAuthenticated">
+        <router-link to="/auth" @click="closeMobileNav">Login</router-link>
+      </li>
+      <li v-else>
+        <router-link to="/events" @click="logout">Logout</router-link>
+      </li>
     </ul>
   </nav>
 </template>
@@ -26,14 +33,22 @@ export default {
   props: ['isOpen'],
   computed: {
     open() {
-      return this.isOpen ? 'open' : ''
+      return this.isOpen ? 'open' : '';
+    },
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
     },
   },
   methods: {
     closeMobileNav() {
       this.$emit('close-mobilenav');
-    }
-  }
+    },
+    logout() {
+      this.$store.dispatch('logout');
+      this.closeMobileNav()
+      this.$router.replace('/events');
+    },
+  },
 };
 </script>
 
@@ -46,7 +61,7 @@ export default {
   top: 0;
   left: 0;
   z-index: 1;
-  background: #B0B5DA;
+  background: #b0b5da;
   width: 100%;
   height: 100vh;
 }
@@ -63,8 +78,8 @@ export default {
   justify-content: center;
 }
 
-li{
-    text-decoration: none;
+li {
+  text-decoration: none;
 }
 
 .open {
@@ -77,7 +92,7 @@ li{
   .mobile-nav {
     display: none;
   }
-  .mobile-nav__items{
+  .mobile-nav__items {
     display: none;
   }
 }

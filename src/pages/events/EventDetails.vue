@@ -15,7 +15,8 @@
     <section>
       <base-card>
         <div class="manager">
-            <base-button>Iscriviti</base-button>
+            <base-button v-if="isAuthenticated">Iscriviti</base-button>
+            <base-button link to="/auth" v-if="!isAuthenticated"><u>Accedi</u> per iscriverti</base-button>
             <base-button @click="playersList" mode="outline">{{playersButton}}</base-button>
         </div>
       </base-card>
@@ -66,6 +67,9 @@ export default {
     },
     playersButton(){
       return this.showPlayersList ? 'Nascondi partecipanti' : 'Mostra partecipanti'
+    },
+    isAuthenticated(){
+      return this.$store.getters.isAuthenticated
     }
   },
   methods: {
@@ -74,7 +78,6 @@ export default {
     }
   },
   created() {
-    //lifeCycle hook di quando viene creato il componente che cerca un coach con lo stesso id passato
     this.selectedEvent = this.$store.getters['events/getEvents'].find(
       (event) => event.id === this.id
     );

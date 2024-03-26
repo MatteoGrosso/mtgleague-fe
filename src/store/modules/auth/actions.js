@@ -15,10 +15,10 @@ export default {
   },
   async auth(context, payload){
     const mode= payload.mode
-    let url= 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB4fhgrsjZ3MQGQeFSM1CIHjFCLiRTXW8E'
+    let url= 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAvSOxun8blX1S7JRtr5QT-Fosa4eR0nJQ'
 
     if(mode==='signup'){
-      url= 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB4fhgrsjZ3MQGQeFSM1CIHjFCLiRTXW8E'
+      url= 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAvSOxun8blX1S7JRtr5QT-Fosa4eR0nJQ'
     }
     const response = await fetch(
       url,
@@ -78,6 +78,7 @@ export default {
     }
   },
   logout(context) {
+    console.log('LOGOUT')
     context.commit('setUser', {
       token: null,
       userId: null

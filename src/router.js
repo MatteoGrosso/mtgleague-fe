@@ -1,4 +1,4 @@
-
+import store from './store/index.js'
 import { createRouter, createWebHistory } from 'vue-router';
 
 import EventsList from './pages/events/EventsList.vue'
@@ -21,26 +21,25 @@ const router = createRouter({
         {path: '/players', component: PlayersList},
         {path: '/players/:id', 
         component: PlayersList, 
-        props: true, //passo l'id (:id) come prop
+        props: true,
         },
         {path: '/counter', component: HealthCounter},
-        {path: '/current', component: CurrentGame},
-        {path: '/auth', component: UserAuth},   //TODO add , meta: {requiresUnauth: true}
+        {path: '/current', component: CurrentGame, meta: {requiresAuth: true}},
+        {path: '/auth', component: UserAuth, meta: {requiresUnauth: true}},
         {path: '/:notFound(.*)', component: NotFound},
     ],
 });
 
-/*
+
 //global route guard
 router.beforeEach((to, _, next)=> {
     if(to.meta.requiresAuth && !store.getters.isAuthenticated){
-        next('/auth') //next(false) bloccherebbe il redirect
+        next(false)
     }else if(to.meta.requiresUnauth && store.getters.isAuthenticated){
-        next('/coaches')
+        next('/events')
     }else{
         next()
     }
 })
-*/
 
 export default router;
