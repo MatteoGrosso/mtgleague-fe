@@ -4,11 +4,10 @@
       <base-card>
         <header>
           <h2>Dettagli Evento</h2>
-          <h3>{{ name }}</h3>
+          <h3>Nome: {{ name }}</h3>
           <h3>Data: {{ date }}</h3>
           <h3>Cap giocatori: {{ cap }}</h3>
-          <h3>Costo iscrizione: {{ cost }}</h3>
-          <h3>{{ description }}</h3>
+          <h3>Descrizione: {{ description }}</h3>
         </header>
       </base-card>
     </section>
@@ -58,9 +57,6 @@ export default {
     },
     date() {
       return this.selectedEvent.date;
-    },
-    cost() {
-      return this.selectedEvent.cost;
     },
     cap() {
       return this.selectedEvent.cap;
