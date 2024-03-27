@@ -11,7 +11,7 @@
 <script>
 import EventCap from './EventCap.vue'
 export default {
-  props: ['id','name', 'date'],
+  props: ['id','name','date','cap','desc'],
   components: {
     EventCap
   },

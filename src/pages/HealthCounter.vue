@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div class="counter">
-      <div class="overlay-down p1" @click="loseHealth('p1')"><div>-</div></div>
-      <div class="overlay p1" @click="gainHealth('p1')"><div>+</div></div>
+      <div class="overlay p2" @click="loseHealth('p1')"><div>-</div></div>
+      <div class="overlay-down p2" @click="gainHealth('p1')"><div>+</div></div>
       <div class="circle">{{p1}}</div>
     </div>
     <div class="reset" @click="reset">
@@ -44,10 +44,10 @@ export default {
   min-width: 300px;
   display: flex;
   flex-direction: column;
-  height: calc(100% - 4rem);
+  height: calc(100% - 6rem);
   width: 100%;
   position: fixed;
-  top: 4rem;
+  top: 6rem;
   left: 0;
   width: 100%;
   justify-content: space-between;
@@ -64,7 +64,7 @@ export default {
   position: relative;
   height: 10%;
   border-radius: 50%;
-  width: 5%;
+  width: 10%;
   height: 7%;
   align-self: center;
   display: flex;

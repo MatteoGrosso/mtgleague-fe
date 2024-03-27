@@ -90,7 +90,7 @@ export default {
   min-width: 300px;
   display: flex;
   width: 100%;
-  height: 4rem;
+  height: 6rem;
   position: fixed;
   z-index: 10;
   top: 0;
@@ -158,10 +158,6 @@ header li {
 }
 
 @media (min-width: 69rem) {
-  .main-header{
-    height: 6rem;
-  }
-
   .main-nav {
     display: flex;
     align-items: center;

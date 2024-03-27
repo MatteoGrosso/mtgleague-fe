@@ -2,9 +2,10 @@
   <nav class="mobile-nav" :class="open">
     <ul class="mobile-nav__items">
       <li>
-        <router-link to="/counter" @click="closeMobileNav"
-          >Segnapunti</router-link
-        >
+        <router-link v-if="isAdmin" @click="closeMobileNav" to="/events/new">Crea Evento</router-link>
+      </li>
+      <li>
+        <router-link to="/counter" @click="closeMobileNav">Segnapunti</router-link>
       </li>
       <li>
           <router-link v-if="isAuthenticated" to="/current" @click="closeMobileNav">Partita in corso</router-link>
@@ -13,9 +14,7 @@
         <router-link to="/events" @click="closeMobileNav">Eventi</router-link>
       </li>
       <li>
-        <router-link to="/players" @click="closeMobileNav"
-          >Classifica</router-link
-        >
+        <router-link to="/players" @click="closeMobileNav">Classifica</router-link>
       </li>
       <li v-if="!isAuthenticated">
         <router-link to="/auth" @click="closeMobileNav">Login</router-link>
@@ -38,6 +37,10 @@ export default {
     isAuthenticated() {
       return this.$store.getters.isAuthenticated;
     },
+    isAdmin(){
+      //TODO
+      return true
+    }
   },
   methods: {
     closeMobileNav() {
