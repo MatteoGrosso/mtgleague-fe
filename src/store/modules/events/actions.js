@@ -63,7 +63,6 @@ export default {
     const futureEvents= []
     const pastEvents= []
     for (const event of events) {
-      console.log(event.date)
       if(event.date > (new Date().toISOString().split('T')[0])){
         futureEvents.push(event)
       }else{
@@ -71,11 +70,7 @@ export default {
       }
     }
 
-    console.log('futureEvents: '+futureEvents)
-    console.log('pastEvents: '+pastEvents)
-
     context.commit('setFutureEvents', futureEvents);
     context.commit('setPastEvents', pastEvents);
-
   }
 };

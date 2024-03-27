@@ -22,13 +22,16 @@
       </base-card>
     </section>
     <section v-if="showPlayersList">
-      <base-card>
+      <base-card v-if="players">
         <player-item
           v-for="player in players"
           :key="player"
           :id="player.id"
           :name="player.name"
         ></player-item>
+      </base-card>
+      <base-card v-else>
+        Non ci sono giocatori iscritti a questo torneo!
       </base-card>
     </section>
   </div>
