@@ -37,7 +37,7 @@
           <event-item
             v-for="event in filteredEvents"
             :key="event"
-            :id="event.id"
+            :id="event.eventId"
             :name="event.name"
             :date="event.date"
             :cap="event.cap"
@@ -117,7 +117,7 @@ export default {
     },
   },
   created() {
-    this.loadAllEvents();
+    this.loadAllEvents(true) //TODO
   },
 };
 </script>

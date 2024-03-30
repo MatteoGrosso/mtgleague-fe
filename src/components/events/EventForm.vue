@@ -68,8 +68,7 @@ export default {
       if (
         (this[input].type === String && this[input].val !== '') ||
         (this[input].type === Number && this[input].val > 0) ||
-        (this[input].type === Date && this[input].val !== '') ||
-        (this[input].type === Array && this[input].val.length > 0)
+        (this[input].type === Date && this[input].val !== '')
       )
         this[input].isValid = true;
       else this[input].isValid = false;
@@ -96,7 +95,6 @@ export default {
         this.description.isValid= false
         this.formIsValid= false
       }
-
     },
     submitForm() {
       this.validateForm();

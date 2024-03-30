@@ -8,34 +8,93 @@
     </base-dialog>
     <base-card>
       <form @submit.prevent="submitForm">
-        <div class="form-control">
-          <label for="email">Email</label>
-          <input type="email" id="email" v-model.trim="email" />
-        </div>
-        <div class="form-control">
-          <label for="password">Password</label>
-          <input type="password" id="password" v-model.trim="password" />
-        </div>
-        <p v-if="!formIsValid">There is an error in the form.."</p>
-        <base-button>{{ submitButtonCaption }}</base-button>
-        <base-button type="button" mode="flat" @click="switchAuthMode">{{
-          switchModeButtonCaption
-        }}</base-button>
-      </form>
+    <div
+      class="form-control"
+      :class="{ invalid: !name.isValid }"
+      v-if="getMode === 'signup'"
+    >
+      <label>Nome</label>
+      <input
+        type="text"
+        id="name"
+        v-model.trim="name.val"
+        @blur="clearValidity('name')"
+      />
+      <p v-if="!name.isValid">Il nome è obbligatorio!</p>
+    </div>
+    <div
+      class="form-control"
+      :class="{ invalid: !lastName.isValid }"
+      v-if="getMode === 'signup'"
+    >
+      <label>Cognome</label>
+      <input
+        type="text"
+        id="lastName"
+        v-model.trim="lastName.val"
+        @blur="clearValidity('lastName')"
+      />
+      <p v-if="!lastName.isValid">Il cognome è obbligatorio!</p>
+    </div>
+    <div class="form-control" :class="{ invalid: !email.isValid }">
+      <label>Email</label>
+      <input
+        type="email"
+        id="email"
+        v-model.trim="email.val"
+        @blur="clearValidity('email')"
+      />
+      <p v-if="!email.isValid">Inserisci una mail valida!</p>
+    </div>
+    <div class="form-control" :class="{ invalid: !password.isValid }">
+      <label>Password</label>
+      <input
+        type="password"
+        id="password"
+        v-model.trim="password.val"
+        @blur="clearValidity('password')"
+      />
+      <p v-if="!password.isValid">Password almeno di 6 caratteri!</p>
+    </div>
+    <p v-if="!formIsValid">Correggi per proseguire.."</p>
+    <base-button>{{ submitButtonCaption }}</base-button>
+    <base-button type="button" mode="flat" @click="switchAuthMode">
+      {{ switchModeButtonCaption }}
+    </base-button>
+  </form>
     </base-card>
   </div>
 </template>
 
 <script>
+
 export default {
   data() {
     return {
-      email: '',
-      password: '',
-      formIsValid: true,
-      mode: 'login',
       error: null,
       isLoading: false,
+      mode: 'login',
+      name: {
+        type: String,
+        val: '',
+        isValid: true,
+      },
+      lastName: {
+        type: String,
+        val: '',
+        isValid: true,
+      },
+      email: {
+        type: String,
+        val: '',
+        isValid: true,
+      },
+      password: {
+        type: String,
+        val: '',
+        isValid: true,
+      },
+      formIsValid: true,
     };
   },
   computed: {
@@ -53,23 +112,67 @@ export default {
         return 'Login instead';
       }
     },
+    getMode() {
+      return this.mode;
+    },
   },
   methods: {
-    async submitForm() {
+    clearValidity(input) {
+      if (this[input].type === String && this[input].val !== '') {
+        if (
+          input === 'email' &&
+          this[input].val &&
+          !this[input].val.includes('@')
+        ) {
+          this[input].isValid = false;
+        } else {
+          this[input].isValid = true;
+        }
+      } else this[input].isValid = false;
+
+      this.validateForm();
+    },
+    resetForm() {
+        this.name.val = '', this.name.isValid = true,
+        this.lastName.val = '', this.lastName.isValid = true,
+        this.email.val = '', this.email.isValid = true,
+        this.password.val = '', this.password.isValid = true,
+        this.formIsValid = true;
+    },
+    validateForm() {
       this.formIsValid = true;
-      if (
-        this.email === '' ||
-        !this.email.includes('@') ||
-        this.password.length < 6
-      ) {
+
+      if (this.mode==='signup' && this.name.val === '') {
+        this.name.isValid = false;
         this.formIsValid = false;
+      }
+      if (this.mode==='signup' && this.lastName.val === '') {
+        this.lastName.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.email.val === ''|| !this.email.val.includes('@')) {
+        this.email.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.password.val === ''|| this.password.length < 6) {
+        this.password.isValid = false;
+        this.formIsValid = false;
+      }
+    },
+    async submitForm() {
+      this.validateForm();
+
+      if (!this.formIsValid) {
         return;
       }
+
       this.isLoading = true;
 
       const actionPayload = {
-        email: this.email,
-        password: this.password,
+        name: this.name.val,
+        lastName: this.lastName.val,
+        email: this.email.val,
+        password: this.password.val,
       };
       const redirectUrl = '/' + (this.$route.query.redirect || 'events');
       try {
@@ -84,15 +187,16 @@ export default {
       }
       this.isLoading = false;
     },
+    handleError() {
+      this.error = null;
+    },
     switchAuthMode() {
+      this.resetForm();
       if (this.mode === 'login') {
         this.mode = 'signup';
       } else {
         this.mode = 'login';
       }
-    },
-    handleError() {
-      this.error = null;
     },
   },
 };
@@ -114,8 +218,7 @@ label {
   display: block;
 }
 
-input,
-textarea {
+input {
   display: block;
   width: 100%;
   font: inherit;
@@ -123,10 +226,45 @@ textarea {
   padding: 0.15rem;
 }
 
-input:focus,
-textarea:focus {
+input:focus {
   border-color: #3d008d;
   background-color: #faf6ff;
   outline: none;
+}
+
+.form-control {
+  margin: 0.5rem 0;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+input {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  font: inherit;
+}
+
+input:focus {
+  background-color: #f0e6fd;
+  outline: none;
+  border-color: #3d008d;
+}
+
+h3 {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+.invalid label {
+  color: red;
+}
+
+.invalid input {
+  border: 1px solid red;
 }
 </style>

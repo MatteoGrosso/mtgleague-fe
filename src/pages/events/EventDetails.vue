@@ -14,14 +14,15 @@
     <section>
       <base-card>
         <div class="manager">
-            <base-button v-if="isAuthenticated">Iscriviti</base-button>
+            <base-button v-if="isAuthenticated && !isSubscribed" @click="subscribePlayer">Iscriviti</base-button>
+            <base-button v-if="isAuthenticated && isSubscribed" @click="unSubscribePlayer">Disiscriviti</base-button>
             <base-button link to="/auth" v-if="!isAuthenticated"><u>Accedi</u> per iscriverti</base-button>
             <base-button @click="playersList" mode="outline">{{playersButton}}</base-button>
         </div>
       </base-card>
     </section>
     <section v-if="showPlayersList">
-      <base-card v-if="players">
+      <base-card v-if="players && players.length>0">
         <player-item
           v-for="player in players"
           :key="player"
@@ -47,40 +48,66 @@ export default {
   data() {
     return {
       selectedEvent: null,
-      players: [],
+      players: null,
       showPlayersList: false
     };
   },
   computed: {
     name() {
-      return this.selectedEvent.name;
+      return this.selectedEvent ? this.selectedEvent.name: '';
     },
     date() {
-      return this.selectedEvent.date;
+      return this.selectedEvent ? this.selectedEvent.date: '';
     },
     cap() {
-      return this.selectedEvent.cap;
+      return this.selectedEvent ? this.selectedEvent.cap: '';
     },
     description() {
-      return this.selectedEvent.description;
+      return this.selectedEvent ? this.selectedEvent.description: '';
     },
     playersButton(){
       return this.showPlayersList ? 'Nascondi partecipanti' : 'Mostra partecipanti'
     },
     isAuthenticated(){
       return this.$store.getters.isAuthenticated
+    },
+    isSubscribed(){
+      return this.players && this.players>0 ? this.players.includes(this.$store.getters.userId) : false
     }
   },
   methods: {
     playersList(){
       this.showPlayersList=!this.showPlayersList
+    },
+    async subscribePlayer(){
+      try {
+        await this.$store.dispatch('events/subscribePlayerToEvent', {
+          eventId: this.id,
+        });
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.$router.replace('/events');
+    },
+    async unSubscribePlayer(){
+      try {
+        await this.$store.dispatch('events/unSubscribePlayerToEvent', {
+          eventId: this.id,
+        });
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.$router.replace('/events');
     }
   },
   created() {
     this.selectedEvent = this.$store.getters['events/getEvents'].find(
-      (event) => event.id === this.id
+      (event) => event.eventId === +this.id
     );
-    this.players = this.selectedEvent.players;
+    if(this.selectedEvent && this.selectedEvent.players){
+      this.players = this.selectedEvent.players;
+    }
+    
   },
 };
 </script>

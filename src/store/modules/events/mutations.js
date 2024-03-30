@@ -5,6 +5,9 @@ export default {
   setEvents(state, payload) {
     state.events = payload;
   },
+  setSelectedEvent(state, payload) {
+    state.event = payload;
+  },
   setFutureEvents(state, payload) {
     state.futureEvents = payload;
   },
