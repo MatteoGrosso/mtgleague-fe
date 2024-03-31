@@ -2,14 +2,12 @@ let timer;
 
 export default {
   async login(context, payload) {
-    console.log('login...');
     return context.dispatch('auth', {
       ...payload,
       mode: 'login',
     });
   },
   async signup(context, payload) {
-    console.log('signup...');
     return context.dispatch('auth', {
       ...payload,
       mode: 'signup',
@@ -48,31 +46,19 @@ export default {
       throw error;
     }
 
-    const expiresIn = +responseData.expiresIn * 1000;
+    const expiresIn = +responseData.expiresIn*1000;
     const expirationDate = new Date().getTime() + expiresIn;
 
-    localStorage.setItem('token', responseData.token);
-    localStorage.setItem('userId', responseData.userId);
-    localStorage.setItem('tokenExpiration', expirationDate);
-
-    console.log('èèèèèèèèèèèèèèèèèèèèèè')
-      console.log(responseData)
-
-    timer = setTimeout(() => {
-      context.dispatch('autoLogout');
-    }, expiresIn);
-
-    if (mode === 'signup') {
-      const newPlayer = {
-        name: payload.name,
-        surname: payload.surname,
-        email: payload.email,
-        password: payload.password,
-      };
-
-      context.dispatch('players/addPlayer', newPlayer);
+    try {
+      localStorage.setItem('token', responseData.token);
+      localStorage.setItem('userId', responseData.userId);
+      localStorage.setItem('tokenExpiration', expirationDate);
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
     }
-
+    timer= setTimeout(()=> {
+      context.dispatch('autoLogout')
+    }, expiresIn)
 
     context.commit('setUser', {
       token: responseData.token,

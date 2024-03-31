@@ -6,7 +6,7 @@ export default {
   namespaced: true,
   state() {
     return {
-      lastFetch: null,
+      lastEventsFetch: null,
       events: [],
       futureEvents: [],
       pastEvents: [],

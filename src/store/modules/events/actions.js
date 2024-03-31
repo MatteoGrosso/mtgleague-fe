@@ -8,7 +8,8 @@ export default {
       description: data.desc,
       players: [],
     };
-    
+    console.log("token")
+    console.log(token)
     const response = await fetch(
       `http://localhost:8080/events/new`,
       {
@@ -30,7 +31,7 @@ export default {
   },
 
   async loadEvents(context, payload) {
-    if (!payload.forceRefresh && !context.getters.shouldUpdate) {
+    if (!payload.forceRefresh && !context.getters.shouldUpdateEvents) {
       return;
     }
 
@@ -63,14 +64,12 @@ export default {
 
     context.dispatch('filterEvents', events);
 
-    context.commit('setFetchTimestamp');
+    context.commit('setLoadEventsFetchTimestamp');
   },
 
   async filterEvents(context, events) {
     const futureEvents = [];
     const pastEvents = [];
-    console.log('------------eventssss')
-    console.log(events)
     for (const event of events) {
 
       if (event.date > new Date().toISOString().split('T')[0]) {

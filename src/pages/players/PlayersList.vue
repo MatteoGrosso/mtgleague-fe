@@ -21,22 +21,18 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
 import PlayerItem from '../../components/players/PlayerItem.vue'
 
 export default {
   computed: {
-    ...mapGetters('players',['getPlayers']),
+    //...mapGetters('players',['getPlayers']),
     sortedPlayers(){
-      return this.getPlayers
+      return null //this.getPlayers
     }
   },
   components: {
     PlayerItem
   }
-
-
-
 };
 </script>
 

@@ -6,7 +6,7 @@ export default {
     state.events = payload;
   },
   setSelectedEvent(state, payload) {
-    state.event = payload;
+    state.selectedEvent = payload;
   },
   setFutureEvents(state, payload) {
     state.futureEvents = payload;
@@ -14,7 +14,7 @@ export default {
   setPastEvents(state, payload) {
     state.pastEvents = payload;
   },
-  setFetchTimestamp(state) {
-    state.lastFetch = new Date().getTime();
+  setLoadEventsFetchTimestamp(state) {
+    state.lastEventsFetch = new Date().getTime();
   },
 };

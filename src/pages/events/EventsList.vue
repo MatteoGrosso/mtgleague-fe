@@ -117,7 +117,7 @@ export default {
     },
   },
   created() {
-    this.loadAllEvents(true) //TODO
+    this.loadAllEvents()
   },
 };
 </script>

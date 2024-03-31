@@ -8,13 +8,16 @@ export default {
   getFutureEvents(state) {
     return state.futureEvents;
   },
-  shouldUpdate(state){
-    const lastFetch= state.lastFetch
-    if(!lastFetch){
+  shouldUpdateEvents(state){
+    const lastEventsFetch= state.lastEventsFetch
+    if(!lastEventsFetch){
       return true
     }else{
       const currentTimeStamp= new Date().getTime()
-      return (currentTimeStamp - lastFetch) /1000 >60 //ritorna true se è più di un minuto fa
+      return (currentTimeStamp - lastEventsFetch) /1000 >60 //ritorna true se è più di un minuto fa
     }
   },
+  getSelectedEvent(state){
+    return state.selectedEvent
+  }
 };
