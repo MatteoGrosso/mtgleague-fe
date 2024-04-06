@@ -160,9 +160,6 @@ export default {
       p2Wins: payload.round.p2Wins
     };
     const token = context.rootGetters.getToken;
-
-    console.log(round)
-
     const response = await fetch(
       `http://localhost:8080/rounds/save`,
       {
@@ -177,6 +174,31 @@ export default {
     const responseData = await response.json();
     if (!response.ok) {
       const error = new Error(responseData.message || 'Failed to fetch!');
+      throw error;
+    }
+  },
+
+  async startEvent(context, eventId){
+    const token = context.rootGetters.getToken;
+
+    const response = await fetch(
+      `http://localhost:8080/events/${eventId}/start`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+      }
+    );
+    let responseData;
+    try {
+      responseData = await response.json();
+    } catch (error) {
+      responseData = {};
+    }
+    if (!response.ok) {
+      const error = new Error(responseData.message || 'Failed to start event!');
       throw error;
     }
   }

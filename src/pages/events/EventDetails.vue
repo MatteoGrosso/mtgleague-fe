@@ -2,7 +2,7 @@
   <div>
     <section>
       <base-card>
-      <base-button :class="'danger'" v-if="isAuthenticated && isAdmin" @click="startEvent">Inizia Torneo</base-button>
+      <base-button :class="'danger'" v-if="isAuthenticated && isAdmin && !isEventStarted" @click="startEvent">Inizia Torneo</base-button>
         <header>
           <h2>Dettagli Evento</h2>
           <h3>Nome: {{ name }}</h3>
@@ -95,6 +95,9 @@ export default {
     },
     isAdmin(){
       return this.$store.getters.getLoggedUserRole==='ADMIN';
+    },
+    isEventStarted(){
+      return this.selectedEvent ? this.selectedEvent.started : true
     }
   },
   methods: {
@@ -135,14 +138,15 @@ export default {
       this.selectedEvent= this.getSelectedEvent
     },
     startEvent(){
-      //TODO
+      this.$store.dispatch('events/startEvent', this.id)
+      this.$router.replace('/events');
     }
   },
   created() {
     this.loadDetails()
   },
   unmounted(){
-    //togliere il selectedEvent sia da qui che da vuex
+    //TODO togliere il selectedEvent sia da qui che da vuex
   }
 };
 </script>

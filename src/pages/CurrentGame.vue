@@ -64,10 +64,10 @@ export default {
         await this.$store.dispatch('events/confirmScore', {
           round: actionPayload,
         });
-        this.$router.replace('/events')
       } catch (err) {
         this.error = err.message || 'Failed to authenticate, try later..';
       }
+      this.$router.replace('/events')
     },
     async loadCurrentRound(){
       try {
