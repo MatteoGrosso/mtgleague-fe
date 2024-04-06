@@ -145,9 +145,6 @@ export default {
   created() {
     this.loadDetails()
   },
-  unmounted(){
-    //TODO togliere il selectedEvent sia da qui che da vuex
-  }
 };
 </script>
 

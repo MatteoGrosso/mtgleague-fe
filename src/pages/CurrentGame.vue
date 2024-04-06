@@ -1,14 +1,14 @@
 <template>
-    <div class="container" v-if="this.currentRound">
+    <div class="container" v-if="roundLoaded">
       <div class="players">
         <div class="player">
-          <base-card class="points">{{ p1wins }}</base-card>
+          <base-card class="points">{{ p1Wins }}</base-card>
           <h4>{{nameP1}} {{lastnameP1}}</h4>
           <div class="overlay" @click="addWinP1">+</div>
           <div class="overlay-bottom" @click="removeWinP1">-</div>
         </div>
         <div class="player">
-          <base-card class="points">{{ p2wins }}</base-card>
+          <base-card class="points">{{ p2Wins }}</base-card>
           <h4>{{nameP2}} {{lastnameP2}}</h4>
           <div class="overlay" @click="addWinP2">+</div>
           <div class="overlay-bottom" @click="removeWinP2">-</div>
@@ -30,13 +30,10 @@ export default {
   components: { BaseButton },
   data() {
     return {
-      p1wins: 0,
-      p2wins: 0,
-      currentRound: null
+      currentRound: null,
+      p1Wins: 0,
+      p2Wins: 0,
     };
-  },
-  created(){
-    this.loadCurrentRound()
   },
   computed: {
     ...mapGetters('events', ['getCurrentRound']),
@@ -51,14 +48,17 @@ export default {
     },
     lastnameP2(){
       return this.currentRound ? this.currentRound.surnameP2 : ""
+    },
+    roundLoaded(){
+      return this.currentRound ? true : false
     }
   },
   methods: {
     async sendScore() {
       const actionPayload = {
         roundId: this.currentRound.id,
-        p1Wins: this.p1wins,
-        p2Wins: this.p2wins,
+        p1Wins: this.p1Wins,
+        p2Wins: this.p2Wins,
       };
       try {
         await this.$store.dispatch('events/confirmScore', {
@@ -70,6 +70,7 @@ export default {
       this.$router.replace('/events')
     },
     async loadCurrentRound(){
+      console.log('loadCurrentRound...')
       try {
         await this.$store.dispatch('events/findCurrentRound');
       } catch (error) {
@@ -79,27 +80,33 @@ export default {
     },
     setCurrentRound(){
       this.currentRound= this.getCurrentRound
+      this.p1Wins= this.currentRound.p1Wins
+      this.p2Wins= this.currentRound.p2Wins
     },
     addWinP1(){
-      if(this.p1wins<2 && (this.p1wins+this.p2wins<3)){
-        this.p1wins++;
+      if(this.p1Wins<2 && (this.p1Wins+this.p2Wins<3)){
+        this.p1Wins++;
       }
     },
     addWinP2(){
-      if(this.p2wins<2 && (this.p1wins+this.p2wins<3)){
-        this.p2wins++;
+      if(this.p2Wins<2 && (this.p1Wins+this.p2Wins<3)){
+        this.p2Wins++;
       }
     },
     removeWinP1(){
-      if(this.p1wins>0){
-        this.p1wins--;
+      if(this.p1Wins>0){
+        this.p1Wins--;
       }
     },
     removeWinP2(){
-      if(this.p2wins>0){
-        this.p2wins--;
+      if(this.p2Wins>0){
+        this.p2Wins--;
       }
     }
+  },
+  created(){
+    console.log('created...')
+    this.loadCurrentRound()
   },
 };
 </script>

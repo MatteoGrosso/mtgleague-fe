@@ -28,7 +28,7 @@ const router = createRouter({
         props: true,
         },
         {path: '/counter', component: HealthCounter},
-        {path: '/current', component: CurrentGame, meta: {requiresAuth: true}},
+        {path: '/current', component: CurrentGame},
         {path: '/auth', component: UserAuth, meta: {requiresUnauth: true}},
         {path: '/:notFound(.*)', component: NotFound},
     ],

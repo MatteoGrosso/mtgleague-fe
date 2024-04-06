@@ -130,9 +130,10 @@ export default {
 
   async findCurrentRound(context) {
     const userId = {
-      playerId: context.rootGetters.userId
+      playerId: context.rootGetters.userId || localStorage.getItem('userId')
     };
-    const token = context.rootGetters.getToken;
+    const token = context.rootGetters.getToken || localStorage.getItem('token');
+
     const response = await fetch(
       `http://localhost:8080/rounds/current`,
       {
