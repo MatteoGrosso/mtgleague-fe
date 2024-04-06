@@ -2,7 +2,7 @@
   <base-card>
     <div class="header">
       <h1>{{ pageTitle }}</h1>
-      <base-button link :mode="'animated'" :to="newEventLink"
+      <base-button link :mode="'animated'" :to="newEventLink" v-if="isAdmin"
         >Crea Nuovo</base-button
       >
     </div>
@@ -73,6 +73,9 @@ export default {
     newEventLink() {
       return this.$route.path + '/new';
     },
+    isAdmin(){
+      return this.$store.getters.getLoggedUserRole === 'ADMIN'
+    }
   },
   components: {
     EventItem,

@@ -8,6 +8,7 @@ export default {
         return {
             userId: null,
             token: null,
+            role: null,
             didAutoLogout: false,
             userRoles: []
         }

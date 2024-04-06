@@ -43,16 +43,8 @@ a {
   color: white;
   cursor: pointer;
   border-radius: 30px;
-  margin-right: 0.5rem;
   display: inline-block;
-}
-
-a:hover,
-a:active,
-button:hover,
-button:active {
-  background-color: #270041;
-  border-color: #270041;
+  text-align: center;
 }
 
 .flat {
@@ -67,11 +59,10 @@ button:active {
   color: #270041;
 }
 
-.flat:hover,
-.flat:active,
-.outline:hover,
-.outline:active {
-  background-color: #edd2ff;
+.danger{
+  background-color: transparent;
+  border-color: rgb(235, 90, 90);
+  color: rgb(235, 90, 90);
 }
 
 .animated {

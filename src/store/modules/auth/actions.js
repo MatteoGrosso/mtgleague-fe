@@ -17,7 +17,7 @@ export default {
     const mode = payload.mode;
     let url = `http://localhost:8080/auth/` + mode;
     let body= {}
-    if (mode ==='signup' ){
+    if (mode ==='signup'){
       body= {
         name: payload.name,
         surname: payload.lastName,
@@ -46,7 +46,7 @@ export default {
       throw error;
     }
 
-    const expiresIn = +responseData.expiresIn*1000;
+    const expiresIn = +responseData.expiresIn;
     const expirationDate = new Date().getTime() + expiresIn;
 
     try {
@@ -56,6 +56,7 @@ export default {
     } catch (error) {
       console.error("Error saving to localStorage:", error);
     }
+    
     timer= setTimeout(()=> {
       context.dispatch('autoLogout')
     }, expiresIn)
@@ -63,9 +64,10 @@ export default {
     context.commit('setUser', {
       token: responseData.token,
       userId: responseData.userId,
+      role: responseData.role
     });
   },
-  tryLogin(context) {
+  async tryLogin(context) {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
     const tokenExpiration = localStorage.getItem('tokenExpiration');
@@ -79,14 +81,31 @@ export default {
       context.dispatch('autoLogout');
     }, expiresIn);
 
-    //TODO richiedere a backend il set di ruoli, così da fare il set locale
-    //andare a backend tramite userId token (solo se expiresIn è > di qualcosa) a fare select dei ruoli
-    //se il token è valido prendo i ruoli
+    const body = {
+      playerId: userId
+    };
+
+    const response = await fetch(`http://localhost:8080/players/role`, {
+      method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(body),
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      const error = new Error(responseData.message || 'Failed to authenticate');
+      throw error;
+    }
+    
     if (token && userId) {
       context.commit('setUser', {
         token: token,
         userId: userId,
-        //userRoles: userRoles
+        role: responseData.role
       });
     }
   },
@@ -103,6 +122,7 @@ export default {
     clearTimeout(timer);
   },
   autoLogout(context) {
+    console.log('token expired, autologout...')
     context.dispatch('logout');
     context.commit('setAutoLogout');
   },

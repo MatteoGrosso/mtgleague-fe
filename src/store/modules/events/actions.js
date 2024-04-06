@@ -127,4 +127,57 @@ export default {
 
     context.commit('setSelectedEvent', responseData);
   },
+
+  async findCurrentRound(context) {
+    const userId = {
+      playerId: context.rootGetters.userId
+    };
+    const token = context.rootGetters.getToken;
+    const response = await fetch(
+      `http://localhost:8080/rounds/current`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(userId),
+      }
+    );
+    const responseData = await response.json();
+    if (!response.ok) {
+      const error = new Error(responseData.message || 'Failed to fetch!');
+      throw error;
+    }
+    context.commit('setCurrentRound', responseData);
+  },
+
+  async confirmScore(context, payload){
+    const round = {
+      playerId: context.rootGetters.userId,
+      roundId: payload.round.roundId,
+      p1Wins: payload.round.p1Wins,
+      p2Wins: payload.round.p2Wins
+    };
+    const token = context.rootGetters.getToken;
+
+    console.log(round)
+
+    const response = await fetch(
+      `http://localhost:8080/rounds/save`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(round),
+      }
+    );
+    const responseData = await response.json();
+    if (!response.ok) {
+      const error = new Error(responseData.message || 'Failed to fetch!');
+      throw error;
+    }
+  }
 };

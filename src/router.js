@@ -20,8 +20,7 @@ const router = createRouter({
         props: true, //passo l'id (:id) come prop
         },
         {path: '/events/new', 
-        component: EventCreation, 
-        props: true, //passo l'id (:id) come prop
+        component: EventCreation,
         },
         {path: '/players', component: PlayersList},
         {path: '/players/:id', 

@@ -17,4 +17,7 @@ export default {
   setLoadEventsFetchTimestamp(state) {
     state.lastEventsFetch = new Date().getTime();
   },
+  setCurrentRound(state, payload){
+    state.currentRound= payload;
+  }
 };

@@ -19,5 +19,8 @@ export default {
   },
   getSelectedEvent(state){
     return state.selectedEvent
+  },
+  getCurrentRound(state){
+    return state.currentRound
   }
 };

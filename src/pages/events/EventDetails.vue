@@ -2,6 +2,7 @@
   <div>
     <section>
       <base-card>
+      <base-button :class="'danger'" v-if="isAuthenticated && isAdmin" @click="startEvent">Inizia Torneo</base-button>
         <header>
           <h2>Dettagli Evento</h2>
           <h3>Nome: {{ name }}</h3>
@@ -9,6 +10,7 @@
           <h3>Cap giocatori: {{ cap }}</h3>
           <h3>Descrizione: {{ description }}</h3>
         </header>
+        
       </base-card>
     </section>
     <section>
@@ -18,7 +20,7 @@
             <base-button v-if="isAuthenticated && isSubscribed" @click="unSubscribePlayer">Disiscriviti</base-button>
             <base-button link to="/auth" v-if="!isAuthenticated"><u>Accedi</u> per iscriverti</base-button>
             <base-button @click="playersList" mode="outline">{{playersButton}}</base-button>
-            <button class="refresh" @click="loadDetails(true)">
+            <button class="refresh" @click="loadDetails()">
             <svg
               class="icon"
               height="24"
@@ -83,13 +85,16 @@ export default {
       return this.selectedEvent ? this.selectedEvent.players : null
     },
     playersButton(){
-      return this.showPlayersList ? 'Nascondi partecipanti' : 'Mostra partecipanti'
+      return this.showPlayersList ? 'Nascondi giocatori' : 'Mostra giocatori'
     },
     isAuthenticated(){
       return this.$store.getters.isAuthenticated
     },
     isSubscribed(){
       return this.players && this.players>0 ? this.players.includes(this.$store.getters.userId) : false
+    },
+    isAdmin(){
+      return this.$store.getters.getLoggedUserRole==='ADMIN';
     }
   },
   methods: {
@@ -116,11 +121,10 @@ export default {
       }
       this.$router.replace('/events');
     },
-    async loadDetails(refresh = false){
+    async loadDetails(){
       try {
         await this.$store.dispatch('events/findEventById', {
-          eventId: this.id,
-          forceRefresh: refresh,
+          eventId: this.id
         });
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
@@ -129,10 +133,13 @@ export default {
     },
     setSelectedEvent(){
       this.selectedEvent= this.getSelectedEvent
+    },
+    startEvent(){
+      //TODO
     }
   },
   created() {
-    this.loadDetails(true)
+    this.loadDetails()
   },
   unmounted(){
     //togliere il selectedEvent sia da qui che da vuex
@@ -143,9 +150,7 @@ export default {
 <style scoped>
 .manager {
   display: flex;
-}
-.manager > button {
-  flex: 1; /* This will make the divs take equal width */
+  justify-content: space-between;
 }
 .refresh {
   background: #def4d7;
@@ -153,7 +158,9 @@ export default {
   border: 0;
   border-radius: 50%;
   max-width: 40px;
-  max-height: 100px;
+  max-height: 40px;
+  width: 40px;
+  height: 40px;
   align-self: center;
 }
 

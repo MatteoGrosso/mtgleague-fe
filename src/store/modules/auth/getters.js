@@ -10,5 +10,8 @@ export default {
   },
   didAutoLogout(state){
     return state.didAutoLogout
+  },
+  getLoggedUserRole(state){
+    return state.role
   }
 };

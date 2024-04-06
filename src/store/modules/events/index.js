@@ -10,7 +10,8 @@ export default {
       events: [],
       futureEvents: [],
       pastEvents: [],
-      selectedEvent: null
+      selectedEvent: null,
+      currentRound: null
     };
   },
   mutations,

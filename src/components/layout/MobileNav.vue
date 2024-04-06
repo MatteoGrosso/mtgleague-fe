@@ -38,8 +38,7 @@ export default {
       return this.$store.getters.isAuthenticated;
     },
     isAdmin(){
-      //TODO
-      return true
+      return this.$store.getters.getLoggedUserRole==='ADMIN';
     }
   },
   methods: {
