@@ -1,3 +1,11 @@
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+};
+
 export default {
   async addEvent(context, data) {
     const token = context.rootGetters.getToken;
@@ -68,17 +76,19 @@ export default {
   async filterEvents(context, events) {
     const futureEvents = [];
     const pastEvents = [];
-    for (const event of events) {
 
-      if (event.date > new Date().toISOString().split('T')[0]) {
-        futureEvents.push(event);
-      } else {
-        pastEvents.push(event);
-      }
+    for (const event of events) {
+        const formattedDate = formatDate(event.date);
+        if (formattedDate > formatDate(new Date())) {
+            futureEvents.push({ ...event, date: formattedDate });
+        } else {
+            pastEvents.push({ ...event, date: formattedDate });
+        }
     }
+
     context.commit('setFutureEvents', futureEvents);
     context.commit('setPastEvents', pastEvents);
-  },
+},
 
   async subscribePlayerToEvent(context, payload) {
     const userId = context.rootGetters.userId;
@@ -122,6 +132,8 @@ export default {
       const error = new Error(responseData.message || 'Failed to fetch!');
       throw error;
     }
+
+    responseData.date=formatDate(responseData.date)
 
     context.commit('setSelectedEvent', responseData);
   },

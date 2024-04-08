@@ -33,8 +33,7 @@ export default {
 </script>
 
 <style scoped>
-button,
-a {
+a,button {
   text-decoration: none;
   padding: 0.75rem 1.5rem;
   font: inherit;
@@ -45,6 +44,8 @@ a {
   border-radius: 30px;
   display: inline-block;
   text-align: center;
+  align-content: center;
+  vertical-align: center;
 }
 
 .flat {

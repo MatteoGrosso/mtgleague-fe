@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <base-card>
     <section>
-      <base-card>
+      <div>
       <base-button :class="'danger'" v-if="isAuthenticated && isAdmin && !isEventStarted" @click="startEvent">Inizia Torneo</base-button>
         <header>
           <h2>Dettagli Evento</h2>
@@ -10,11 +10,10 @@
           <h3>Cap giocatori: {{ cap }}</h3>
           <h3>Descrizione: {{ description }}</h3>
         </header>
-        
-      </base-card>
+      </div>
     </section>
     <section>
-      <base-card>
+      <div>
         <div class="manager">
             <base-button v-if="isAuthenticated && !isSubscribed" @click="subscribePlayer">Iscriviti</base-button>
             <base-button v-if="isAuthenticated && isSubscribed" @click="unSubscribePlayer">Disiscriviti</base-button>
@@ -34,22 +33,22 @@
             </svg>
           </button>
         </div>
-      </base-card>
+      </div>
     </section>
     <section v-if="showPlayersList">
-      <base-card v-if="players && players.length>0">
+      <div v-if="players && players.length>0">
         <player-item
           v-for="player in players"
           :key="player"
-          :id="player.id"
           :name="player.name"
+          :surname="player.surname"
         ></player-item>
-      </base-card>
-      <base-card v-else>
+      </div>
+      <div v-else>
         Non ci sono giocatori iscritti a questo torneo!
-      </base-card>
+      </div>
     </section>
-  </div>
+  </base-card>
 </template>
 
 <script>
@@ -151,7 +150,9 @@ export default {
 <style scoped>
 .manager {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  height: 4rem;
+  margin-bottom: 1rem;
 }
 .refresh {
   background: #def4d7;
