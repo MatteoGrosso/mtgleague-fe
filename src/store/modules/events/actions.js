@@ -8,8 +8,6 @@ export default {
       description: data.desc,
       players: [],
     };
-    console.log("token")
-    console.log(token)
     const response = await fetch(
       `http://localhost:8080/events/new`,
       {

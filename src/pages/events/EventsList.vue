@@ -42,6 +42,7 @@
             :date="event.date"
             :cap="event.cap"
             :desc="event.desc"
+            :players="event.players.length"
           >
           </event-item>
         </ul>

@@ -3,18 +3,14 @@
     <base-card :class="eventClass">
       <h3>{{ name }}</h3>
       <h4>Data: {{ date }}</h4>
-      <event-cap></event-cap>
+      <h1>Cap: {{players}}/{{cap}}</h1>
     </base-card>
   </li>
 </template>
 
 <script>
-import EventCap from './EventCap.vue'
 export default {
-  props: ['id','name','date','cap','desc'],
-  components: {
-    EventCap
-  },
+  props: ['id','name','date','cap','desc','players'],
   computed: {
     eventDetailsLink() {
       return this.$route.path + '/' + this.id;

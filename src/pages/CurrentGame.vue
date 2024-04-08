@@ -4,18 +4,19 @@
         <div class="player">
           <base-card class="points">{{ p1Wins }}</base-card>
           <h4>{{nameP1}} {{lastnameP1}}</h4>
-          <div class="overlay" @click="addWinP1">+</div>
-          <div class="overlay-bottom" @click="removeWinP1">-</div>
+          <div class="overlay" @click="addWinP1" v-if="!ended">+</div>
+          <div class="overlay-bottom" @click="removeWinP1" v-if="!ended">-</div>
         </div>
         <div class="player">
           <base-card class="points">{{ p2Wins }}</base-card>
           <h4>{{nameP2}} {{lastnameP2}}</h4>
-          <div class="overlay" @click="addWinP2">+</div>
-          <div class="overlay-bottom" @click="removeWinP2">-</div>
+          <div class="overlay" @click="addWinP2" v-if="!ended">+</div>
+          <div class="overlay-bottom" @click="removeWinP2" v-if="!ended">-</div>
         </div>
       </div>
       <div class="send">
-        <base-button class="btn-send" @click="sendScore">Invia Punteggio</base-button>
+        <base-button class="btn-send" @click="sendScore" v-if="!ended">Invia Punteggio</base-button>
+        <h3 v-else>Ti è stato assegnato il bye</h3>
       </div>
     </div>
     <div v-else>
@@ -51,6 +52,9 @@ export default {
     },
     roundLoaded(){
       return this.currentRound ? true : false
+    },
+    ended(){
+      return this.currentRound ? this.currentRound.ended : true
     }
   },
   methods: {
@@ -70,7 +74,6 @@ export default {
       this.$router.replace('/events')
     },
     async loadCurrentRound(){
-      console.log('loadCurrentRound...')
       try {
         await this.$store.dispatch('events/findCurrentRound');
       } catch (error) {
@@ -80,8 +83,8 @@ export default {
     },
     setCurrentRound(){
       this.currentRound= this.getCurrentRound
-      this.p1Wins= this.currentRound.p1Wins
-      this.p2Wins= this.currentRound.p2Wins
+      this.p1Wins= this.currentRound ? this.currentRound.p1Wins : 0
+      this.p2Wins= this.currentRound ? this.currentRound.p2Wins : 0
     },
     addWinP1(){
       if(this.p1Wins<2 && (this.p1Wins+this.p2Wins<3)){
@@ -105,7 +108,6 @@ export default {
     }
   },
   created(){
-    console.log('created...')
     this.loadCurrentRound()
   },
 };

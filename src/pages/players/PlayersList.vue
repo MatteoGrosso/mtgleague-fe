@@ -3,10 +3,10 @@
     <div id="app">
       <div class="player-row header">
         <div class="player-rank">#</div>
-        <div class="player-name">Name</div>
-        <div class="player-score">Score</div>
-        <div class="player-events">Events Played</div>
-        <div class="player-winrate">Win Rate</div>
+        <div class="player-name">Nome</div>
+        <div class="player-score">Punti</div>
+        <div class="player-events">#Tornei</div>
+        <div class="player-winrate">%MatchWin</div>
       </div>
         <player-item v-for="(player,index) in sortedPlayers" :key="player"
         :rank="index+1"
@@ -43,6 +43,7 @@ export default {
       justify-content: space-between;
       padding: 10px 0;
       border-bottom: 1px solid #ccc;
+      font-size: 0.8rem;
     }
     .player-row.header {
       font-weight: bold;
