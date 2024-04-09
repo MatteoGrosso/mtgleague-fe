@@ -15,8 +15,6 @@ export default {
         }
     
         const players = [];
-        console.log('responseData')
-        console.log(responseData)
     
         for (const key in responseData.results) {
           const player = {
@@ -29,9 +27,6 @@ export default {
           };
           players.push(player);
         }
-
-        console.log('players')
-        console.log(players)
     
         context.commit('setPlayers', players);
     

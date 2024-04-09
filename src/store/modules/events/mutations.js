@@ -19,5 +19,8 @@ export default {
   },
   setCurrentRound(state, payload){
     state.currentRound= payload;
+  },
+  setSelectedEventRanks(state, payload){
+    state.selectedEventRanks=payload
   }
 };

@@ -122,9 +122,9 @@ export default {
   },
 
   async findEventById(context, payload) {
-
+    const eventId= payload.eventId
     const response = await fetch(
-      `http://localhost:8080/events/${payload.eventId}`
+      `http://localhost:8080/events/${eventId}`
     );
     const responseData = await response.json();
 
@@ -136,6 +136,24 @@ export default {
     responseData.date=formatDate(responseData.date)
 
     context.commit('setSelectedEvent', responseData);
+    
+    if(responseData.date<=formatDate(new Date())){
+      context.dispatch('loadEventRanks', eventId)
+    }
+  },
+
+  async loadEventRanks(context, eventId){
+    const response = await fetch(
+      `http://localhost:8080/events/${eventId}/players`
+    );
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      const error = new Error(responseData.message || 'Failed to fetch!');
+      throw error;
+    }
+    
+    context.commit('setSelectedEventRanks', responseData.results);
   },
 
   async findCurrentRound(context) {

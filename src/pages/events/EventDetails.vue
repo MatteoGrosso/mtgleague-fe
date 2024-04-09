@@ -2,12 +2,17 @@
   <base-card>
     <section>
       <div>
-      <base-button :class="'danger'" v-if="isAuthenticated && isAdmin && !isEventStarted" @click="startEvent">Inizia Torneo</base-button>
+        <base-button
+          :class="'danger'"
+          v-if="isAuthenticated && isAdmin && !isEventStarted"
+          @click="startEvent"
+          >Inizia Torneo</base-button
+        >
         <header>
           <h2>Dettagli Evento</h2>
           <h3>Nome: {{ name }}</h3>
           <h3>Data: {{ date }}</h3>
-          <h3>Cap giocatori: {{ cap }}</h3>
+          <h3>Cap giocatori: {{playersSubscribed}}/{{ cap }}</h3>
           <h3>Descrizione: {{ description }}</h3>
         </header>
       </div>
@@ -15,11 +20,29 @@
     <section>
       <div>
         <div class="manager">
-            <base-button v-if="isAuthenticated && !isSubscribed" @click="subscribePlayer">Iscriviti</base-button>
-            <base-button v-if="isAuthenticated && isSubscribed" @click="unSubscribePlayer">Disiscriviti</base-button>
-            <base-button link to="/auth" v-if="!isAuthenticated"><u>Accedi</u> per iscriverti</base-button>
-            <base-button @click="playersList" mode="outline">{{playersButton}}</base-button>
-            <button class="refresh" @click="loadDetails()">
+          <base-button
+            v-if="isAuthenticated && !isSubscribed && !isEventGone"
+            @click="subscribePlayer"
+            >Iscriviti</base-button
+          >
+          <base-button
+            v-if="isAuthenticated && isSubscribed && !isEventGone"
+            @click="unSubscribePlayer"
+            >Disiscriviti</base-button
+          >
+          <base-button link to="/auth" v-if="!isAuthenticated && !isEventGone"
+            ><u>Accedi</u> per iscriverti</base-button
+          >
+          <base-button
+            v-if="!isEventGone"
+            @click="playersList"
+            mode="outline"
+            >{{ playersButton }}</base-button
+          >
+          <base-button v-if="isEventGone" @click="playersRanks" mode="outline"
+            >Mostra classifica</base-button
+          >
+          <button class="refresh" @click="loadDetails()">
             <svg
               class="icon"
               height="24"
@@ -36,38 +59,51 @@
       </div>
     </section>
     <section v-if="showPlayersList">
-      <div v-if="players && players.length>0">
+      <div v-if="players && players.length > 0">
         <player-item
           v-for="player in players"
           :key="player"
           :name="player.name"
           :surname="player.surname"
+          :showNamesOnly="true"
         ></player-item>
       </div>
-      <div v-else>
-        Non ci sono giocatori iscritti a questo torneo!
+      <div v-else>Non ci sono giocatori iscritti a questo torneo!</div>
+    </section>
+    <section v-if="showPlayersRanks">
+      <div v-if="getSelectedEventRanks && getSelectedEventRanks.length > 0">
+        <players-ranks :players="getSelectedEventRanks" :general="false"></players-ranks>
       </div>
+      <div v-else>La classifica non è ancora disponibile...</div>
     </section>
   </base-card>
 </template>
 
 <script>
 import PlayerItem from '@/components/players/PlayerItem.vue';
-import {mapGetters} from 'vuex';
+import PlayersRanks from '../../components/players/PlayersRanks.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   props: ['id'],
   components: {
     PlayerItem,
+    PlayersRanks
   },
   data() {
     return {
       selectedEvent: null,
-      showPlayersList: false
+      showPlayersList: false,
+      showPlayersRanks: false,
+      isEventGone: false,
     };
   },
   computed: {
-    ...mapGetters('events', ['getSelectedEvent']),
+    ...mapGetters('events', [
+      'getSelectedEvent',
+      'isGone',
+      'getSelectedEventRanks',
+    ]),
     name() {
       return this.selectedEvent ? this.selectedEvent.name : '';
     },
@@ -80,30 +116,38 @@ export default {
     description() {
       return this.selectedEvent ? this.selectedEvent.description : '';
     },
-    players(){
-      return this.selectedEvent ? this.selectedEvent.players : null
+    playersSubscribed(){
+      return this.selectedEvent ? this.selectedEvent.players.length : null;
     },
-    playersButton(){
-      return this.showPlayersList ? 'Nascondi giocatori' : 'Mostra giocatori'
+    players() {
+      return this.selectedEvent ? this.selectedEvent.players : null;
     },
-    isAuthenticated(){
-      return this.$store.getters.isAuthenticated
+    playersButton() {
+      return this.showPlayersList ? 'Nascondi giocatori' : 'Mostra giocatori';
     },
-    isSubscribed(){
-      return this.players && this.players>0 ? this.players.includes(this.$store.getters.userId) : false
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
     },
-    isAdmin(){
-      return this.$store.getters.getLoggedUserRole==='ADMIN';
+    isSubscribed() {
+      return this.players && this.players > 0
+        ? this.players.includes(this.$store.getters.userId)
+        : false;
     },
-    isEventStarted(){
-      return this.selectedEvent ? this.selectedEvent.started : true
-    }
+    isAdmin() {
+      return this.$store.getters.getLoggedUserRole === 'ADMIN';
+    },
+    isEventStarted() {
+      return this.selectedEvent ? this.selectedEvent.started : true;
+    },
   },
   methods: {
-    playersList(){
-      this.showPlayersList=!this.showPlayersList
+    playersList() {
+      this.showPlayersList = !this.showPlayersList;
     },
-    async subscribePlayer(){
+    playersRanks() {
+      this.showPlayersRanks = !this.showPlayersRanks;
+    },
+    async subscribePlayer() {
       try {
         await this.$store.dispatch('events/subscribePlayerToEvent', {
           eventId: this.id,
@@ -111,9 +155,9 @@ export default {
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
-      this.loadDetails(true)
+      this.loadDetails(true);
     },
-    async unSubscribePlayer(){
+    async unSubscribePlayer() {
       try {
         await this.$store.dispatch('events/unSubscribePlayerToEvent', {
           eventId: this.id,
@@ -123,26 +167,27 @@ export default {
       }
       this.$router.replace('/events');
     },
-    async loadDetails(){
+    async loadDetails() {
       try {
         await this.$store.dispatch('events/findEventById', {
-          eventId: this.id
+          eventId: this.id,
         });
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
-      this.setSelectedEvent()
+      this.setSelectedEvent();
     },
-    setSelectedEvent(){
-      this.selectedEvent= this.getSelectedEvent
+    setSelectedEvent() {
+      this.selectedEvent = this.getSelectedEvent;
+      this.isEventGone = this.isGone;
     },
-    startEvent(){
-      this.$store.dispatch('events/startEvent', this.id)
+    startEvent() {
+      this.$store.dispatch('events/startEvent', this.id);
       this.$router.replace('/events');
-    }
+    },
   },
   created() {
-    this.loadDetails()
+    this.loadDetails();
   },
 };
 </script>
