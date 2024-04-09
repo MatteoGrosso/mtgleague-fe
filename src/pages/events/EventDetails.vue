@@ -4,10 +4,10 @@
       <div>
         <base-button
           :class="'danger'"
-          v-if="isAuthenticated && isAdmin && !isEventStarted"
-          @click="startEvent"
-          >Inizia Torneo</base-button
-        >
+          v-if="isAuthenticated && isAdmin && !isEventStarted && isEventToday"
+          @click="startEvent">
+          Inizia Torneo
+        </base-button>
         <header>
           <h2>Dettagli Evento</h2>
           <h3>Nome: {{ name }}</h3>
@@ -21,27 +21,18 @@
       <div>
         <div class="manager">
           <base-button
-            v-if="isAuthenticated && !isSubscribed && !isEventGone"
-            @click="subscribePlayer"
-            >Iscriviti</base-button
-          >
+            v-if="isAuthenticated && !isSubscribed && !isEventGone && !isFull"
+            @click="subscribePlayer">Iscriviti</base-button>
+          <div class="danger" v-if="isEventToday || (!isSubscribed && isFull)">Iscrizioni chiuse!</div>
           <base-button
             v-if="isAuthenticated && isSubscribed && !isEventGone"
-            @click="unSubscribePlayer"
-            >Disiscriviti</base-button
-          >
-          <base-button link to="/auth" v-if="!isAuthenticated && !isEventGone"
-            ><u>Accedi</u> per iscriverti</base-button
-          >
+            @click="unSubscribePlayer">Disiscriviti</base-button>
+          <base-button link to="/auth" v-if="!isAuthenticated && !isEventGone"><u>Accedi</u> per iscriverti</base-button>
           <base-button
             v-if="!isEventGone"
             @click="playersList"
-            mode="outline"
-            >{{ playersButton }}</base-button
-          >
-          <base-button v-if="isEventGone" @click="playersRanks" mode="outline"
-            >Mostra classifica</base-button
-          >
+            mode="outline">{{ playersButton }}</base-button>
+          <base-button v-if="isEventGone" @click="playersRanks" mode="outline">Mostra classifica</base-button>
           <button class="refresh" @click="loadDetails()">
             <svg
               class="icon"
@@ -83,6 +74,7 @@
 import PlayerItem from '@/components/players/PlayerItem.vue';
 import PlayersRanks from '../../components/players/PlayersRanks.vue';
 import { mapGetters } from 'vuex';
+import { formatDate } from '@/main';
 
 export default {
   props: ['id'],
@@ -129,9 +121,7 @@ export default {
       return this.$store.getters.isAuthenticated;
     },
     isSubscribed() {
-      return this.players && this.players > 0
-        ? this.players.includes(this.$store.getters.userId)
-        : false;
+      return this.players ? this.players.some(player => player.id == this.$store.getters.userId) : false;
     },
     isAdmin() {
       return this.$store.getters.getLoggedUserRole === 'ADMIN';
@@ -139,6 +129,12 @@ export default {
     isEventStarted() {
       return this.selectedEvent ? this.selectedEvent.started : true;
     },
+    isEventToday(){
+      return this.selectedEvent ? this.selectedEvent.date===formatDate(new Date()) : false;
+    },
+    isFull(){
+      return this.playersSubscribed === this.cap
+    }
   },
   methods: {
     playersList() {
@@ -193,6 +189,13 @@ export default {
 </script>
 
 <style scoped>
+.danger{
+  text-align: center;
+  align-self: center;
+  color: red;
+  padding-right: 1rem;
+}
+
 .manager {
   display: flex;
   justify-content: space-around;

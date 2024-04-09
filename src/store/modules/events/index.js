@@ -12,7 +12,7 @@ export default {
       pastEvents: [],
       selectedEventRanks: [],
       selectedEvent: null,
-      currentRound: null
+      currentRound: null,
     };
   },
   mutations,

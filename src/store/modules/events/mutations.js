@@ -22,5 +22,5 @@ export default {
   },
   setSelectedEventRanks(state, payload){
     state.selectedEventRanks=payload
-  }
+  },
 };

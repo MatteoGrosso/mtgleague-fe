@@ -2,20 +2,14 @@
   <base-card>
     <div class="header">
       <h1>{{ pageTitle }}</h1>
-      <base-button link :mode="'animated'" :to="newEventLink" v-if="isAdmin"
-        >Crea Nuovo</base-button
-      >
+      <base-button link :mode="'animated'" :to="newEventLink" v-if="isAdmin">Crea Nuovo</base-button>
     </div>
     <div>
       <section>
         <header class="header">
           <div>
-            <base-button :mode="programButtonMode" @click="showProgram"
-              >Futuri</base-button
-            >
-            <base-button :mode="historyButtonMode" @click="showHistory"
-              >Passati</base-button
-            >
+            <base-button :mode="programButtonMode" @click="showProgram">Futuri</base-button>
+            <base-button :mode="historyButtonMode" @click="showHistory">Passati</base-button>
           </div>
           <button class="refresh" @click="loadAllEvents(true)">
             <svg

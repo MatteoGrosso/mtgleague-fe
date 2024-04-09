@@ -1,10 +1,4 @@
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const year = date.getFullYear();
-  return `${day}/${month}/${year}`;
-};
+import { formatDate } from "@/main";
 
 export default {
   async addEvent(context, data) {
@@ -79,7 +73,7 @@ export default {
 
     for (const event of events) {
         const formattedDate = formatDate(event.date);
-        if (formattedDate > formatDate(new Date())) {
+        if (formattedDate >= formatDate(new Date())) {
             futureEvents.push({ ...event, date: formattedDate });
         } else {
             pastEvents.push({ ...event, date: formattedDate });

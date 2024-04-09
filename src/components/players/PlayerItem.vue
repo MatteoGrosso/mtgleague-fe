@@ -16,7 +16,7 @@
   <div v-else>
     <div class="player-row">
       <div class="player-rank">{{ rank }}</div>
-      <div class="player-name">{{name}} {{surname}}</div>
+      <div class="player-name">{{truncatedNameSurname}}</div>
       <div class="player-score">{{ score }}</div>
       <div class="player-omw">{{ omw }}</div>
       <div class="player-gw">{{ gw }}</div>
@@ -28,6 +28,11 @@
 <script>
 export default {
   props: ['rank', 'name', 'surname', 'score', 'eventsPlayed', 'winrate', 'omw', 'gw', 'ogw', 'general', 'showNamesOnly'],
+  computed: {
+    truncatedNameSurname() {
+      return this.name.substring(0, 1).length + this.surname.length > 9 ? (this.surname+' '+this.name.substring(0, 1)).substring(0, 9) + ".." : (this.surname+' '+this.name.substring(0, 1));
+    },
+  }
 };
 </script>
 
@@ -64,6 +69,7 @@ export default {
 .player-name {
   flex: 1.5;
   max-width: 10rem;
+  white-space: nowrap;
 }
 
 .player-score,

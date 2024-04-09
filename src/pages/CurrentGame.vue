@@ -16,7 +16,8 @@
       </div>
       <div class="send">
         <base-button class="btn-send" @click="sendScore" v-if="!ended">Invia Punteggio</base-button>
-        <h3 v-else>Ti è stato assegnato il bye</h3>
+        <h3 v-else-if="isBye && ended && isEventEnded">Ti è stato assegnato il bye come ultimo turno del torneo..</h3>
+        <h3 v-else-if="ended && isEventEnded">Turni terminati!</h3>
       </div>
     </div>
     <div v-else>
@@ -55,6 +56,13 @@ export default {
     },
     ended(){
       return this.currentRound ? this.currentRound.ended : true
+    },
+    isBye(){
+      return this.currentRound ? this.currentRound.bye : false
+    },
+    isEventEnded(){
+      console.log(this.currentRound)
+      return this.currentRound ? this.currentRound.eventEnded : false
     }
   },
   methods: {
