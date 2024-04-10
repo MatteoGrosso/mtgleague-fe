@@ -37,8 +37,6 @@ a,button {
   text-decoration: none;
   padding: 0.75rem 1.5rem;
   font: inherit;
-  background-color: #6f0000;
-  border: 1px solid #6f0000;
   color: white;
   cursor: pointer;
   border-radius: 30px;
@@ -46,6 +44,16 @@ a,button {
   text-align: center;
   align-content: center;
   vertical-align: center;
+}
+
+a{
+  background-color: rgb(57, 2, 34);
+  border: 1px solid rgb(57, 2, 34);
+}
+
+button {
+  background-color: #6f0000;
+  border: 1px solid #6f0000;
 }
 
 .flat {
@@ -68,9 +76,7 @@ a,button {
 
 .animated {
     color: white;
-    background: #6f0000;
     align-self: center;
-    border: none;
   }
   
   .animated:hover,

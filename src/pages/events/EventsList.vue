@@ -48,10 +48,10 @@ export default {
         : 'Eventi';
     },
     programButtonMode() {
-      return this.pageMode === 'program' ? '' : 'outline';
+      return this.pageMode === 'program' ? 'outline' : '';
     },
     historyButtonMode() {
-      return this.pageMode === 'history' ? '' : 'outline';
+      return this.pageMode === 'history' ? 'outline' : '';
     },
     newEventLink() {
       return this.$route.path + '/new';
