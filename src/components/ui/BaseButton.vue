@@ -52,8 +52,8 @@ a{
 }
 
 button {
-  background-color: #6f0000;
-  border: 1px solid #6f0000;
+  background-color: #3E2411;
+  border: 1px solid #3E2411;
 }
 
 .flat {
@@ -80,8 +80,8 @@ button {
   }
 
 .animated-highlight{
-  background-color: #6f0000;
-  border: 1px solid #6f0000;
+  background-color: rgb(57, 2, 34);
+  border: 1px solid rgb(57, 2, 34);
   color: white;
   align-self: center;
 }

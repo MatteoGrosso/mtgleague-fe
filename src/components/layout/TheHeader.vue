@@ -27,10 +27,10 @@
           <router-link v-if="isAuthenticated" to="/current">Partita in corso</router-link>
         </li>
         <li v-if="!isAuthenticated">
-          <base-button link to="/auth">Login</base-button>
+          <base-button link to="/auth" class="outline">Login</base-button>
         </li>
         <li v-else>
-          <base-button @click="logout">Logout</base-button>
+          <base-button class="outline" @click="logout">Logout</base-button>
         </li>
       </ul>
     </nav>
@@ -94,7 +94,7 @@ export default {
   z-index: 10;
   top: 0;
   left: 0;
-  background-color: #476584;
+  background-color: #DB9F75;
   align-items: center;
   justify-content: space-between;
   grid-area: header;
@@ -117,8 +117,8 @@ header a {
 a:active,
 a:hover,
 a.router-link-active {
-  border: 1px solid #200122;
-  background-color: #a78282;
+  border: 1px solid #804012;
+  background-color: #804012;
 }
 
 h1 {
@@ -154,7 +154,7 @@ header li {
 }
 
 .logo {
-  color: #200122
+  color: #804012
 }
 
 @media (min-width: 69rem) {

@@ -17,7 +17,7 @@ export default {
   max-width: 40rem;
   height: 100%;
   color: beige;
-  background-color: rgb(57, 2, 34);
+  background-color: #3E2411;
 }
 
 @media(min-width: 41rem){

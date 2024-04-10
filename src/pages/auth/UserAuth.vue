@@ -224,7 +224,7 @@ input {
   font: inherit;
   border: 1px solid #ccc;
   padding: 0.15rem;
-  background-color: #2c3e50;
+  background-color: #DB9F75;
 }
 
 input:focus {

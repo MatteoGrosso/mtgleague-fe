@@ -54,7 +54,7 @@ body {
   grid-template-areas: "header"
                         "main";
   height: 100%;
-  background-color: #2c3e50;
+  background-color: #804012;
 }
 
 #app {

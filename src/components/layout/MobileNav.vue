@@ -17,7 +17,7 @@
         <base-button link to="/players" @click="closeMobileNav">Classifica</base-button>
       </li>
       <li v-if="!isAuthenticated">
-        <base-button link to="/auth" @click="closeMobileNav">Login</base-button>
+        <base-button link class="outline" to="/auth" @click="closeMobileNav">Login</base-button>
       </li>
       <li v-else>
         <base-button link class="outline" to="/events" @click="logout">Logout</base-button>
@@ -65,7 +65,7 @@ export default {
   top: 0;
   left: 0;
   z-index: 1;
-  background-color: rgb(55, 77, 100);
+  background-color: #545748;
   width: 100%;
   height: 100vh;
 }
