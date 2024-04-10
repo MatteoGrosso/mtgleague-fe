@@ -82,7 +82,7 @@ export default {
 
     context.commit('setFutureEvents', futureEvents);
     context.commit('setPastEvents', pastEvents);
-},
+  },
 
   async subscribePlayerToEvent(context, payload) {
     const userId = context.rootGetters.userId;
@@ -102,6 +102,37 @@ export default {
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(playerToSubscribe),
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      const error = new Error(
+        responseData.error || 'Failed to subscribe player!'
+      );
+      throw error;
+    }
+  },
+
+  async unSubscribePlayerToEvent(context, payload) {
+    const userId = context.rootGetters.userId;
+    const token = context.rootGetters.getToken;
+    const eventId = payload.eventId;
+
+    const playerToUnSubscribe = {
+      playerId: userId,
+    };
+
+    const response = await fetch(
+      `http://localhost:8080/events/${eventId}/quit`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(playerToUnSubscribe),
       }
     );
 
