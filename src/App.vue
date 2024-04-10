@@ -1,17 +1,21 @@
 <template>
   <the-header></the-header>
+  <main-card>
   <router-view v-slot="slotProps">
     <transition name="route" mode="out-in">
       <component :is="slotProps.Component"></component>
     </transition>
   </router-view>
+  </main-card>
 </template>
 
 <script>
 import TheHeader from "./components/layout/TheHeader.vue";
+import MainCard from './components/ui/MainCard.vue';
 export default {
   components: {
-    TheHeader
+    TheHeader,
+    MainCard
   },
   computed: {
     didAutoLogout(){
@@ -50,6 +54,7 @@ body {
   grid-template-areas: "header"
                         "main";
   height: 100%;
+  background-color: #2c3e50;
 }
 
 #app {

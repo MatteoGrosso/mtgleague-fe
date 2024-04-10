@@ -2,32 +2,34 @@
   <nav class="mobile-nav" :class="open">
     <ul class="mobile-nav__items">
       <li>
-        <router-link v-if="isAdmin" @click="closeMobileNav" to="/events/new">Crea Evento</router-link>
+        <base-button link v-if="isAdmin" @click="closeMobileNav" to="/events/new">Crea Evento</base-button>
       </li>
       <li>
-        <router-link to="/counter" @click="closeMobileNav">Segnapunti</router-link>
+        <base-button link to="/counter" @click="closeMobileNav">Segnapunti</base-button>
       </li>
-      <li>
-          <router-link v-if="isAuthenticated" to="/current" @click="closeMobileNav">Partita in corso</router-link>
+      <li v-if="isAuthenticated">
+          <base-button link to="/current" @click="closeMobileNav">Partita in corso</base-button>
         </li>
       <li>
-        <router-link to="/events" @click="closeMobileNav">Eventi</router-link>
+        <base-button link to="/events" @click="closeMobileNav">Eventi</base-button>
       </li>
       <li>
-        <router-link to="/players" @click="closeMobileNav">Classifica</router-link>
+        <base-button link to="/players" @click="closeMobileNav">Classifica</base-button>
       </li>
       <li v-if="!isAuthenticated">
-        <router-link to="/auth" @click="closeMobileNav">Login</router-link>
+        <base-button link to="/auth" @click="closeMobileNav">Login</base-button>
       </li>
       <li v-else>
-        <router-link to="/events" @click="logout">Logout</router-link>
+        <base-button link class="outline" to="/events" @click="logout">Logout</base-button>
       </li>
     </ul>
   </nav>
 </template>
 
 <script>
+import BaseButton from '../ui/BaseButton.vue';
 export default {
+  components: { BaseButton },
   emits: ['close-mobilenav'],
   props: ['isOpen'],
   computed: {
@@ -63,7 +65,7 @@ export default {
   top: 0;
   left: 0;
   z-index: 1;
-  background: #b0b5da;
+  background-color: rgb(55, 77, 100);
   width: 100%;
   height: 100vh;
 }
@@ -81,7 +83,7 @@ export default {
 }
 
 li {
-  text-decoration: none;
+  padding-top: 1rem;
 }
 
 .open {

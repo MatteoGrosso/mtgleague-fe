@@ -12,12 +12,10 @@ export default {
 <style scoped>
 .card {
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   padding: 1rem;
   max-width: 40rem;
-  height: 100%;
   color: beige;
-  background-color: rgb(57, 2, 34);
+  background-color: inherit;
 }
 
 @media(min-width: 41rem){

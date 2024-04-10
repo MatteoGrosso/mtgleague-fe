@@ -37,8 +37,8 @@ a,button {
   text-decoration: none;
   padding: 0.75rem 1.5rem;
   font: inherit;
-  background-color: #3a0061;
-  border: 1px solid #3a0061;
+  background-color: #6f0000;
+  border: 1px solid #6f0000;
   color: white;
   cursor: pointer;
   border-radius: 30px;
@@ -50,14 +50,14 @@ a,button {
 
 .flat {
   background-color: transparent;
-  color: #3a0061;
+  color: #6f0000;
   border: none;
 }
 
 .outline {
   background-color: transparent;
-  border-color: #270041;
-  color: #270041;
+  border-color: beige;
+  color: beige;
 }
 
 .danger{
@@ -68,7 +68,7 @@ a,button {
 
 .animated {
     color: white;
-    background: #1463f5;
+    background: #6f0000;
     align-self: center;
     border: none;
   }

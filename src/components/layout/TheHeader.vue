@@ -94,7 +94,7 @@ export default {
   z-index: 10;
   top: 0;
   left: 0;
-  background: #3d008d;
+  background-color: #476584;
   align-items: center;
   justify-content: space-between;
   grid-area: header;
@@ -108,16 +108,17 @@ export default {
 
 header a {
   text-decoration: none;
-  color: #f391e3;
   display: inline-block;
   padding: 0.75rem 1.5rem;
   border: 1px solid transparent;
+  color: #200122
 }
 
 a:active,
 a:hover,
 a.router-link-active {
-  border: 1px solid #f391e3;
+  border: 1px solid #200122;
+  background-color: #a78282;
 }
 
 h1 {
@@ -153,7 +154,7 @@ header li {
 }
 
 .logo {
-  color: #fb84d0;
+  color: #200122
 }
 
 @media (min-width: 69rem) {

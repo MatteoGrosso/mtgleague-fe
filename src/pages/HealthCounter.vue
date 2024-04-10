@@ -118,7 +118,7 @@ img {
   justify-content: center;
   align-items: center;
   font-size: 2.5rem;
-  background-color: white;
+  background-color: #2c3e50;
   transform: translate(-50%, -50%); /* Centering trick */
 }
 

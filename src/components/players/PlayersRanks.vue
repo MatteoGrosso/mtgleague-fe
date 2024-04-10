@@ -1,5 +1,4 @@
 <template>
-  <base-card>
     <div class="players-container">
       <div class="player-row header" v-if="general">
         <div class="player-rank">#</div>
@@ -33,7 +32,6 @@
         ></player-item>
       </div>
     </div>
-  </base-card>
 </template>
 
 <script>

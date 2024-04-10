@@ -7,7 +7,7 @@
     </div>
     <div class="form-control" :class="{invalid: !date.isValid}">
       <label>Data</label>
-      <input type="date" id="date" v-model.trim="date.val" @blur="clearValidity('date')" />
+      <input type="date" id="date" :min="minDate" v-model.trim="date.val" @blur="clearValidity('date')" />
       <p v-if="!date.isValid">Devi selezionare una data!</p>
     </div>
     <div class="form-control" :class="{invalid: !cap.isValid}">
