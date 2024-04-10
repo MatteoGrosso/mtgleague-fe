@@ -175,7 +175,6 @@ img {
   justify-content: center;
   align-items: center;
   font-size: 4rem;
-  background-color: white;
 }
 
 .reset {

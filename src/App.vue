@@ -54,7 +54,16 @@ body {
   grid-template-areas: "header"
                         "main";
   height: 100%;
-  background-color: #804012;
+  background: url('assets/OIP.jpg');
+  background-color: red;
+  background-position: center top 5rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-origin: border-box;
+  background-clip: border-box;
+  width: 100vw;
+  height: 33vh;
+  position: relative;
 }
 
 #app {
