@@ -27,7 +27,7 @@
           <base-button
             v-if="isAuthenticated && isSubscribed && !isEventGone"
             @click="unSubscribePlayer">Disiscriviti</base-button>
-          <base-button link to="/auth" v-if="!isAuthenticated && !isEventGone"><u>Accedi</u> per iscriverti</base-button>
+          <base-button link class="animated-highlight" to="/auth" v-if="!isAuthenticated && !isEventGone"><u>Accedi</u> per iscriverti</base-button>
           <base-button
             v-if="!isEventGone"
             @click="playersList"

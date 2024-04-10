@@ -78,9 +78,18 @@ button {
     color: white;
     align-self: center;
   }
+
+.animated-highlight{
+  background-color: #6f0000;
+  border: 1px solid #6f0000;
+  color: white;
+  align-self: center;
+}
   
   .animated:hover,
-  .animated:focus{
+  .animated:focus,
+  .animated-highlight:hover,
+  .animated-highlight:focus{
     transition-timing-function: cubic-bezier(0.6, 4, 0.3, 0.8);
     animation: gelatine 0.5s 1;
     background: #f391e3;
