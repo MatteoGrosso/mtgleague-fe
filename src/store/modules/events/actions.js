@@ -11,7 +11,7 @@ export default {
       players: [],
     };
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:/events/new`,
+      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8080/events/new`,
       {
         method: 'POST',
         headers: {
@@ -36,7 +36,7 @@ export default {
     }
 
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:/events`
+      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8080/events`
     );
     const responseData = await response.json();
 
@@ -94,7 +94,7 @@ export default {
     };
 
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:/events/${eventId}/register`,
+      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8080/events/${eventId}/register`,
       {
         method: 'POST',
         headers: {
@@ -125,7 +125,7 @@ export default {
     };
 
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:/events/${eventId}/quit`,
+      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8080/events/${eventId}/quit`,
       {
         method: 'POST',
         headers: {
@@ -149,7 +149,7 @@ export default {
   async findEventById(context, payload) {
     const eventId= payload.eventId
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:/events/${eventId}`
+      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8080/events/${eventId}`
     );
     const responseData = await response.json();
 
@@ -169,7 +169,7 @@ export default {
 
   async loadEventRanks(context, eventId){
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:/events/${eventId}/players`
+      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8080/events/${eventId}/players`
     );
     const responseData = await response.json();
 
@@ -188,7 +188,7 @@ export default {
     const token = context.rootGetters.getToken || localStorage.getItem('token');
 
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:/rounds/current`,
+      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8080/rounds/current`,
       {
         method: 'POST',
         headers: {
@@ -215,7 +215,7 @@ export default {
     };
     const token = context.rootGetters.getToken;
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:/rounds/save`,
+      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8080/rounds/save`,
       {
         method: 'POST',
         headers: {
@@ -236,7 +236,7 @@ export default {
     const token = context.rootGetters.getToken;
 
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:/events/${eventId}/start`,
+      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8080/events/${eventId}/start`,
       {
         method: 'POST',
         headers: {
