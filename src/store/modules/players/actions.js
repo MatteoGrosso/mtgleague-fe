@@ -5,7 +5,7 @@ export default {
         }
     
         const response = await fetch(
-          `http://http://ec2-35-174-170-51.compute-1.amazonaws.com:8080/players`
+          `http://ec2-35-174-170-51.compute-1.amazonaws.com:/players`
         );
         const responseData = await response.json();
     
