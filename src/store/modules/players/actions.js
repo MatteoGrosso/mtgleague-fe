@@ -1,3 +1,4 @@
+import { endpoint } from '../../index.js';
 export default {
     async loadPlayers(context, payload) {
         if (!payload.forceRefresh && !context.getters.shouldUpdatePlayers) {
@@ -5,7 +6,7 @@ export default {
         }
     
         const response = await fetch(
-          `http://ec2-35-174-170-51.compute-1.amazonaws.com:8082/players`
+          endpoint + `/players`
         );
         const responseData = await response.json();
     

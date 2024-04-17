@@ -1,4 +1,5 @@
 import { formatDate } from "@/main";
+import { endpoint } from '../../index.js';
 
 export default {
   async addEvent(context, data) {
@@ -11,7 +12,7 @@ export default {
       players: [],
     };
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8082/events/new`,
+      endpoint + `/events/new`,
       {
         method: 'POST',
         headers: {
@@ -36,7 +37,7 @@ export default {
     }
 
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8082/events`
+      endpoint + `/events`
     );
     const responseData = await response.json();
 
@@ -94,7 +95,7 @@ export default {
     };
 
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8082/events/${eventId}/register`,
+      endpoint + `/events/${eventId}/register`,
       {
         method: 'POST',
         headers: {
@@ -125,7 +126,7 @@ export default {
     };
 
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8082/events/${eventId}/quit`,
+      endpoint + `/events/${eventId}/quit`,
       {
         method: 'POST',
         headers: {
@@ -149,7 +150,7 @@ export default {
   async findEventById(context, payload) {
     const eventId= payload.eventId
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8082/events/${eventId}`
+      endpoint + `/events/${eventId}`
     );
     const responseData = await response.json();
 
@@ -169,7 +170,7 @@ export default {
 
   async loadEventRanks(context, eventId){
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8082/events/${eventId}/players`
+      endpoint + `/events/${eventId}/players`
     );
     const responseData = await response.json();
 
@@ -188,7 +189,7 @@ export default {
     const token = context.rootGetters.getToken || localStorage.getItem('token');
 
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8082/rounds/current`,
+      endpoint + `/rounds/current`,
       {
         method: 'POST',
         headers: {
@@ -215,7 +216,7 @@ export default {
     };
     const token = context.rootGetters.getToken;
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8082/rounds/save`,
+      endpoint + `/rounds/save`,
       {
         method: 'POST',
         headers: {
@@ -236,7 +237,7 @@ export default {
     const token = context.rootGetters.getToken;
 
     const response = await fetch(
-      `http://ec2-35-174-170-51.compute-1.amazonaws.com:8082/events/${eventId}/start`,
+      endpoint + `/events/${eventId}/start`,
       {
         method: 'POST',
         headers: {

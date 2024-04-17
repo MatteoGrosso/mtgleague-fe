@@ -1,3 +1,5 @@
+import { endpoint } from '../../index.js';
+
 let timer;
 
 export default {
@@ -15,7 +17,7 @@ export default {
   },
   async auth(context, payload) {
     const mode = payload.mode;
-    let url = `http://ec2-35-174-170-51.compute-1.amazonaws.com:8082/auth/` + mode;
+    let url = endpoint + `/auth/` + mode;
     let body= {}
     if (mode ==='signup'){
       body= {
@@ -85,7 +87,7 @@ export default {
       playerId: userId
     };
 
-    const response = await fetch(`http://ec2-35-174-170-51.compute-1.amazonaws.com:8082/players/role`, {
+    const response = await fetch(`http://localhost:8082/players/role`, {
       method: 'POST',
         headers: {
           'Content-Type': 'application/json',

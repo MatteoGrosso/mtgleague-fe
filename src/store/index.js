@@ -12,4 +12,6 @@ const store= createStore({
     },
 })
 
+export const endpoint = 'http://localhost:8082';
+
 export default store;

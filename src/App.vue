@@ -64,6 +64,7 @@ body {
   width: 100vw;
   height: 33vh;
   position: relative;
+  background-attachment: fixed;
 }
 
 #app {
