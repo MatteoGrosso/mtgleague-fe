@@ -12,6 +12,6 @@ const store= createStore({
     },
 })
 
-export const endpoint = 'http://localhost:8082';
+export const endpoint = 'https://se84ct8bne.execute-api.us-east-1.amazonaws.com/Prod';
 
 export default store;
