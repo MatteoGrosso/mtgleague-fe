@@ -75,6 +75,8 @@ export default {
     const tokenExpiration = localStorage.getItem('tokenExpiration');
     const expiresIn = +tokenExpiration - new Date().getTime();
 
+    let url = endpoint + `/auth/login`;
+
     if (expiresIn < 0) {
       return;
     }
@@ -87,7 +89,7 @@ export default {
       playerId: userId
     };
 
-    const response = await fetch(`http://localhost:8082/players/role`, {
+    const response = await fetch(url, {
       method: 'POST',
         headers: {
           'Content-Type': 'application/json',
