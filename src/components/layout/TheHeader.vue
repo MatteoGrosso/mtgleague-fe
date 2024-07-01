@@ -114,13 +114,6 @@ header a {
   color: #200122
 }
 
-a:active,
-a:hover,
-a.router-link-active {
-  border: 1px solid #804012;
-  background-color: #804012;
-}
-
 h1 {
   margin: 0;
 }
