@@ -6,7 +6,7 @@ export default {
         }
     
         const response = await fetch(
-          endpoint + `/players`
+          endpoint + `/ranking`
         );
         const responseData = await response.json();
     
